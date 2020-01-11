@@ -67,7 +67,7 @@ export class SuchformularComponent {
     }
 
     /**
-     * Suche nach B&uuml;chern, die den spezfizierten Suchkriterien entsprechen
+     * Suche nach Spielen, die den spezfizierten Suchkriterien entsprechen
      * @return false, um das durch den Button-Klick ausgel&ouml;ste Ereignis
      *         zu konsumieren.
      */
@@ -75,17 +75,17 @@ export class SuchformularComponent {
         const { titel } = this.sucheTitelComponent;
         const { verlag } = this.sucheVerlagComponent;
         const { art } = this.sucheArtComponent;
-        const { javascript } = this.sucheSchlagwoerterComponent;
-        const { typescript } = this.sucheSchlagwoerterComponent;
+        const { solo } = this.sucheSchlagwoerterComponent;
+        const { team } = this.sucheSchlagwoerterComponent;
         console.log(
-            `SuchformularComponent.onFind(): titel=${titel}, verlag=${verlag}, art=${art}, javascript=${javascript}, typescript=${typescript}`,
+            `SuchformularComponent.onFind(): titel=${titel}, verlag=${verlag}, art=${art}, javascript=${solo}, typescript=${team}`,
         );
 
         this.suchkriterien.next({
             titel,
             verlag,
             art,
-            schlagwoerter: { javascript, typescript },
+            schlagwoerter: { solo, team },
         });
 
         // Inspektion der Komponente mit dem Tag-Namen "app" im Debugger

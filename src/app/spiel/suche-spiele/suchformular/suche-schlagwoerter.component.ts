@@ -25,8 +25,8 @@ import { Component } from '@angular/core';
     templateUrl: './suche-schlagwoerter.component.html',
 })
 export class SucheSchlagwoerterComponent {
-    javascript = false;
-    typescript = false;
+    solo = false;
+    team = false;
 
     constructor() {
         console.log('SucheSchlagwoerterComponent.constructor()');
