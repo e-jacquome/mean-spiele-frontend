@@ -16,6 +16,7 @@
  */
 
 /* eslint-disable object-curly-newline */
+/* eslint-disable sort-imports */
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
