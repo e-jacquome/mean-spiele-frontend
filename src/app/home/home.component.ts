@@ -22,7 +22,7 @@ import { Title } from '@angular/platform-browser';
     selector: 'hs-home',
     template: `
         <h1 class="display-1 mt-4">Willkommen in der JBGB-Spielebibliothek!</h1>
-        <h3 class="display-1 mt-4">
+        <h3 class="display-4 mt-1">
             Schauen Sie sich gerne nach interessanten Spielen um.
         </h3>
         <router-outlet></router-outlet>

@@ -63,7 +63,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     readonly faSearchPlus = faSearchPlus;
     readonly faTrash = faTrash;
 
-    private spielSubscription!: Subscription;
+    private spieleSubscription!: Subscription;
     private errorSubscription!: Subscription;
     private removeDescription: Subscription | undefined;
 
@@ -95,13 +95,13 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     // Die Ableitung vom Interface OnInit ist nicht notwendig, aber erleichtet
     // IntelliSense bei der Verwendung von TypeScript.
     ngOnInit() {
-        this.spielSubscription = this.subscribeSpiele();
+        this.spieleSubscription = this.subscribeSpiele();
         this.errorSubscription = this.subscribeError();
         this.isAdmin = this.authService.isAdmin;
     }
 
     ngOnDestroy() {
-        this.spielSubscription.unsubscribe();
+        this.spieleSubscription.unsubscribe();
         this.errorSubscription.unsubscribe();
 
         if (this.removeDescription !== undefined) {

@@ -78,7 +78,7 @@ export class SuchformularComponent {
         const { solo } = this.sucheSchlagwoerterComponent;
         const { team } = this.sucheSchlagwoerterComponent;
         console.log(
-            `SuchformularComponent.onFind(): titel=${titel}, verlag=${verlag}, art=${art}, solo=${solo}, typescript=${team}`,
+            `SuchformularComponent.onFind(): titel=${titel}, verlag=${verlag}, art=${art}, solo=${solo}, team=${team}`,
         );
 
         this.suchkriterien.next({
