@@ -30,7 +30,7 @@ export class CreateArtComponent implements OnInit {
     @Input()
     readonly form!: FormGroup;
 
-    readonly art = new FormControl('DRUCKAUSGABE');
+    readonly art = new FormControl('BRETT');
 
     ngOnInit() {
         console.log('CreateArtComponent.ngOnInit');

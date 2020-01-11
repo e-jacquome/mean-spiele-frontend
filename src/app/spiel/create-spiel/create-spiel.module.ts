@@ -48,7 +48,7 @@ import { Title } from '@angular/platform-browser';
         FontAwesomeModule,
         CreateArtModule,
         CreateDatumModule,
-        CreateIsbnModule,
+        //CreateIsbnModule,
         CreateLieferbarModule,
         CreatePreisModule,
         CreateRabattModule,

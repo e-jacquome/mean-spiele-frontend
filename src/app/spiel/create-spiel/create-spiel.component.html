@@ -16,7 +16,7 @@
 -->
 <div class="card">
     <div class="card-header">
-        <span class="ml-1 font-weight-bold">Neues Spiel</span>
+        <span class="ml-1 font-weight-bold">Spiel hinzufuegen</span>
     </div>
 
     <div class="card-body">
@@ -44,8 +44,7 @@
                             [size]="faExclamationTriangleSize"
                         ></fa-icon>
                         <strong class="text-help">
-                            Wenn Sie die Seite jetzt verlassen, verlieren Sie
-                            Ihre eingegebenen Daten.
+                            Sie werden Ihre eingegeben Daten verlieren, falls Sie die Seite verlassen.
                         </strong>
                     </span>
                 </div>
@@ -60,7 +59,7 @@
             <hs-create-datum [form]="form"></hs-create-datum>
             <hs-create-lieferbar [form]="form"></hs-create-lieferbar>
             <hs-create-schlagwoerter [form]="form"></hs-create-schlagwoerter>
-            <hs-create-isbn [form]="form"></hs-create-isbn>
+            <!-- <hs-create-isbn [form]="form"></hs-create-isbn> -->
 
             <div class="form-group row">
                 <div class="col offset-2">
@@ -77,13 +76,13 @@
                         [disabled]="!form.valid"
                     >
                         <fa-icon [icon]="faCheck"></fa-icon>
-                        <span class="ml-1">Jetzt anlegen</span>
+                        <span class="ml-1">Erstellen</span>
                     </button>
                 </div>
             </div>
         </form>
 
-        <small>* sind Pflichtfelder</small>
+        <small>* sind notwendig</small>
     </div>
 </div>
 
