@@ -1,0 +1,18 @@
+{
+    "titel": "MauMau",
+    "rating": 1,
+    "art": "KARTEN",
+    "verlag": "RAVENSBURGER",
+    "preis": 9.99,
+    "rabatt": 1,
+    "lieferbar": true,
+    "datum": "2019-07-12T00:00:00.000Z",
+    "homepage": "https://maumau.de/",
+    "schlagwoerter": ["TEAM"],
+    "autoren": [
+        {
+            "vorname": "Meli",
+            "nachname": "Maus"
+        }
+    ]
+}

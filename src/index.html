@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+    Copyright (C) 2017 - present Juergen Zimmermann, Hochschule Karlsruhe
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--
+    Neue CSS-Funktionalitaet, wie z.B. CSS Grid Layout:
+    chrome://flags/#enable-experimental-web-platform-features
+-->
+
+<html lang="de">
+    <head>
+        <!--
+            http://de.selfhtml.org/html/kopfdaten/meta.htm
+            http://wiki.selfhtml.org/wiki/HTML/Kopfdaten/meta
+            http://wiki.whatwg.org/wiki/MetaExtensions
+        -->
+        <meta charset="utf-8" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <title>Beispiel</title>
+        <base href="/" />
+
+        <!--
+            Viewport ist der Anzeigebereich im Fenster der Anwendung, der fuer
+            die Darstellung tatsaechlich zur Verfuegung steht. Bei mobilen
+            Geraeten ist der Viewport oft auf eine Breite von 980 Pixeln
+            eingestellt. Deshalb ist eine Website zwar komplett zu sehen, aber
+            die Inhalte sind sehr klein und Schriften nicht lesbar.
+            Anfaenglicher Zoomgrad ist 1.0, damit die Seite 1:1 dargestellt wird
+            Ggf. zusaetzlich user-scalable=no
+        -->
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <!-- wss/443 fuer browser-sync -->
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'self'; connect-src 'self' wss://localhost/; img-src 'self' data:; style-src 'unsafe-inline' 'self'; font-src 'self'; manifest-src 'self'"
+        />
+        <meta name="author" content="Juergen Zimmermann" />
+        <meta name="description" content="Beispiel mit Angular" />
+        <meta
+            name="keywords"
+            content="Software Engineering,Angular,REST,Bootstrap,Font Awesome,Chart.js"
+        />
+
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <!--
+            manifest.json enthaelt Metadaten, falls diese Web-Anwendung zum
+            Homescreen von Android hinzugefuegt wird.
+            https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest
+            https://www.w3.org/TR/appmanifest
+            https://developer.mozilla.org/en-US/docs/Web/Manifest
+            https://developer.mozilla.org/de/docs/Mozilla/Add-ons/WebExtensions/manifest.json
+        -->
+        <link rel="manifest" href="manifest.webmanifest" />
+        <meta name="theme-color" content="#1976d2" />
+    </head>
+
+    <body>
+        <!--
+            JIT (= Just-in-Time) Compiler übersetzt im Browser: 2 Sek. für Ladezeit
+            AoT (Ahead-of-Time) Compiler innerhalb vom Buildprozess
+        -->
+        <hs-root>
+            <nav
+                style="background-color: #bed6f8; height: 60px; width: 100%"
+            ></nav>
+            <main>Bitte warten ...</main>
+        </hs-root>
+        <noscript>
+            JavaScript muss in den Einstellungen aktiviert sein.
+        </noscript>
+
+        <script type="text/javascript" src="/js/jquery.slim.min.js"></script>
+        <script type="text/javascript" src="/js/popper.min.js"></script>
+    </body>
+</html>

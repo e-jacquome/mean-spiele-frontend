@@ -1,0 +1,73 @@
+<!--
+    Copyright (C) 2015 - present Juergen Zimmermann, Hochschule Karlsruhe
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--
+    Internationalisierung durch z.B. https://github.com/ocombe/ng2-translate
+-->
+
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+        <a
+            routerLink="/fluege/suche"
+            routerLinkActive="active"
+            class="nav-link"
+        >
+            <!-- <i class="fas fa-search"></i> -->
+            <fa-icon [icon]="faSearch"></fa-icon>
+            <span class="ml-1">Suche</span>
+        </a>
+    </li>
+
+    <li class="nav-item" *ngIf="isAdmin">
+        <a
+            routerLink="/fluege/create"
+            routerLinkActive="active"
+            class="nav-link"
+        >
+            <fa-icon [icon]="faBook"></fa-icon>
+            <span class="ml-1">Neues Flug</span>
+        </a>
+    </li>
+
+    <li class="nav-item dropdown" *ngIf="isAdmin">
+        <div
+            class="nav-link dropdown-toggle"
+            id="navbarDropdownMenuLink"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+        >
+            <fa-icon [icon]="faChartBar"></fa-icon>
+            <span class="ml-1">Diagramme</span>
+        </div>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a routerLink="/fluege/balkendiagramm" class="dropdown-item">
+                <fa-icon [icon]="faChartBar"></fa-icon>
+                <span class="ml-1">Balkendiagramm</span>
+            </a>
+            <a routerLink="/fluege/liniendiagramm" class="dropdown-item">
+                <fa-icon [icon]="faChartLine"></fa-icon>
+                <span class="ml-1">Liniendiagramm</span>
+            </a>
+            <a routerLink="/fluege/tortendiagramm" class="dropdown-item">
+                <fa-icon [icon]="faChartPie"></fa-icon>
+                <span class="ml-1">Tortendiagramm</span>
+            </a>
+        </div>
+    </li>
+</ul>
+<hs-login-logout></hs-login-logout>

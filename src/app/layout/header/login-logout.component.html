@@ -1,0 +1,59 @@
+<!--
+    Copyright (C) 2015 - present Juergen Zimmermann, Hochschule Karlsruhe
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<form
+    (submit)="onLogin()"
+    class="form-inline my-2 my-lg-0"
+    autocomplete="off"
+    role="form"
+    *ngIf="notLoggedIn; else: loggedIn"
+>
+    <label for="usernameInput" class="form-control-label">
+        <small>Benutzername</small>
+    </label>
+    <input
+        id="usernameInput"
+        type="search"
+        class="form-control form-control-sm ml-2"
+        tabindex="1"
+        autocomplete="off"
+        required
+        [(ngModel)]="username"
+        name="username"
+    />
+    <label for="passwordInput" class="form-control-label ml-3">
+        <small>Passwort</small>
+    </label>
+    <input
+        id="passwordInput"
+        type="password"
+        class="form-control form-control-sm ml-2"
+        tabindex="2"
+        autocomplete="off"
+        required
+        [(ngModel)]="password"
+        name="password"
+    />
+    <button class="btn btn-primary btn-sm ml-3" tabindex="3">Login</button>
+</form>
+
+<ng-template #loggedIn>
+    <button class="btn btn-primary" (click)="onLogout()">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>
+        <span class="ml-1">Logout</span>
+    </button>
+</ng-template>

@@ -1,0 +1,95 @@
+###
+### N e t z w e r k   -  V e r b i n d u n g   n o t w e n d i g
+###
+
+@token = Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1MTcwNDkyOTgsImlzcyI6Imh0dHBzOi8vaHNrYS5kZS9zaG9wL0p1ZXJnZW5aaW1tZXJtYW5uIiwic3ViIjoiMjAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAxIiwianRpIjoiZGY0MzM4ZDQtZGQ3Yi00ZDI4LTk1NTEtMzUyYWM5ZWExMGUwIiwiZXhwIjoxNTE3MTM1Njk4fQ.oIXlxJ1qYpFFz4f_5eSLuCTeqc4dSnVwfXZIlPqtQLdbTFgSefyHRVqa2j4QUo9ztF_Ipy2x-prVQZ3NzKDzjBGPqPpwQePDvhblRR9fyKx6GeFncX8ncak4oIzQRkL--M5hQgY-8lmot3bn_lIwGiuG_mjEiW6AZgyTXISmuTJEDp2KDh0JyCGaWh1Kk7TE3DlSbJqaLMQE0JJsSlGXsH55ukztS6PIHmpdp-rME8ayFjXV7rQGIWLQmLCcApoY284g5kAxlYeVjoBhTVmmrjY194JgAJLjWJ7zDv0f2IffaoZnOLUNar7KUBdO1c0ECYiMBqLSxQ3ZO4vo-02NNA
+@host = 127.0.0.1:8443
+
+### Login
+# @name login
+POST https://{{host}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&password=p
+
+### Login mit falschem Password
+# @name login
+POST https://{{host}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&password=FALSCH
+
+### Suche alle Buecher
+https://{{host}}/spiele
+
+### Suche mit vorhandener Buch-ID
+https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
+
+### Suche mit vorhandener Buch-ID und Versionsnummer
+https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
+If-None-Match: 0
+
+### Optionen zu Buch-ID
+OPTIONS https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
+
+### Suche mit ungueltiger Buch-ID
+https://{{host}}/spiele/YYYYYYYY-YYYY-YYYY-YYYY-YYYYYYYYYYYY
+
+### Suche mit nicht-vorhandener Buch-ID
+https://{{host}}/spiele/99999999-9999-9999-9999-999999999999
+
+### Suche mit vorhandenem Titel
+https://{{host}}/spiele?titel=a
+
+### Suche mit vorhandenen Schlagwoertern
+https://{{host}}/spiele?solo=true&team=true
+
+### Suche mit gueltiger Buchart
+https://{{host}}/spiele?art=KARTEN
+
+### Suche mit gueltigem Rating
+https://{{host}}/spiele?rating=1
+
+### Suche lieferbare Buecher
+https://{{host}}/spiele?lieferbar=true
+
+### Neues Buch anlegen
+POST https://{{host}}/spiele
+Content-Type: application/json
+Authorization: {{token}}
+
+< ./config/rest/spiel-neu.json
+
+### Neues Buch mit ungueltigen Daten anlegen
+POST https://{{host}}/spiele
+Content-Type: application/json
+Authorization: {{token}}
+
+< ./config/rest/spiel-neu-invalid.json
+
+### Vorhandenes Buch aktualisieren
+PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
+Content-Type: application/json
+Authorization: {{token}}
+If-Match: 0
+
+< ./config/rest/spiel-3-put.json
+
+### Vorhandenes Buch *OHNE* Versionsnummer aktualisieren
+PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
+Content-Type: application/json
+Authorization: {{token}}
+
+< ./config/rest/spiel-3-put.json
+
+### Vorhandenes Buch mit ungueltigen Daten aktualisieren
+PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
+Content-Type: application/json
+Authorization: {{token}}
+If-Match: 0
+
+< ./config/rest/spiel-3-put-invalid.json
+
+### Loeschen eines vorhandenen Buches
+DELETE https://{{host}}/spiele/00000000-0000-0000-0000-000000000005
+Authorization: {{token}}

@@ -1,0 +1,48 @@
+<!--
+    Copyright (C) 2018 - present Juergen Zimmermann, Hochschule Karlsruhe
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="form-group row">
+    <label for="isbnInput" class="col col-2 form-control-label"> ISBN * </label>
+    <div class="col col-10" [formGroup]="form">
+        <input
+            id="isbnInput"
+            placeholder="ISBN-Nummer, z.B. 3-89722-583-2"
+            class="form-control"
+            required
+            minlength="2"
+            formControlName="isbn"
+            [class.border-danger]="isbn.invalid && isbn.touched"
+        />
+
+        <div *ngIf="isbn.invalid && isbn.touched" class="alert alert-danger">
+            <div *ngIf="isbn.errors && isbn.errors.required">
+                <fa-icon [icon]="faExclamationCircle"></fa-icon>
+                <span class="ml-1">
+                    Eine ISBN-Nummer, z.B. 3-89722-583-2, muss eingegeben
+                    werden.
+                </span>
+            </div>
+            <div *ngIf="isbn.errors && isbn.errors.pattern">
+                <fa-icon [icon]="faExclamationCircle"></fa-icon>
+                <span class="ml-1">
+                    Eine g&uuml;ltige ISBN-Nummer, z.B. 3-89722-583-2, muss
+                    eingegeben werden .
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

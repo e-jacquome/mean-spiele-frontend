@@ -1,0 +1,148 @@
+<!--
+    Copyright (C) 2015 - present Juergen Zimmermann, Hochschule Karlsruhe
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Template Binding durch die Direktive ngIf -->
+<!-- Eine Direktive ist eine Komponente ohne View -->
+
+<div class="mt-2">
+    <hs-waiting *ngIf="waiting; else suchergebnis"></hs-waiting>
+
+    <ng-template #suchergebnis>
+        <div class="card" *ngIf="spiele.length; else showErrorMsg">
+            <div class="card-header">
+                <fa-icon [icon]="faFolderOpen"></fa-icon>
+                <span class="ml-1 font-weight-bold">Gefundene Spiele</span>
+            </div>
+            <div class="card-body">
+                <table
+                    class="table table-striped table-hover table-responsive"
+                    [@easeIn]="'in'"
+                >
+                    <thead class="thead-default">
+                        <tr>
+                            <th>Nr.</th>
+                            <th>ID</th>
+                            <th>Titel</th>
+                            <th>Verlag</th>
+                            <th>Schlagw&ouml;rter</th>
+                            <th>
+                                <span class="sr-only">
+                                    Spalte f&uuml;r Details
+                                </span>
+                            </th>
+                            <th *ngIf="isAdmin">
+                                <span class="sr-only">
+                                    Spalte f&uuml;r Entfernen
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Template Binding: ngFor -->
+                        <!-- Event-Binding: statt (click) auch on-click -->
+                        <!-- ts als Komponente: https://stackoverflow.com/questions/34556277/angular2-table-rows-as-component -->
+                        <tr
+                            *ngFor="let s of spiele; index as i"
+                            (click)="onSelect(s)"
+                            [@easeOut]="'in'"
+                        >
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ s._id }}</td>
+                            <td>{{ s.titel }}</td>
+                            <td>
+                                <span [ngSwitch]="s.verlag">
+                                    <span *ngSwitchCase="'RAVENSBURGER'"
+                                        >Ravensburger</span
+                                    >
+                                    <span *ngSwitchCase="'SCHMIDT'">
+                                        Schmidt
+                                    </span>
+                                    <span *ngSwitchDefault>unbekannt</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span *ngFor="let sw of s.schlagwoerter">
+                                    <span [ngSwitch]="sw">
+                                        <span *ngSwitchCase="'SOLO'">
+                                            Solo<br />
+                                        </span>
+                                        <span *ngSwitchCase="'TEAM'">
+                                            Team
+                                        </span>
+                                    </span>
+                                </span>
+                            </td>
+                            <td>
+                                <!-- Pfad detailsBuch/:id, in routes.ts -->
+                                <!-- modaler Dialog als Alternative: -->
+                                <!--
+                                        https://getbootstrap.com/docs/4.0/components/modal
+                                    -->
+                                <a
+                                    [routerLink]="['..', s._id]"
+                                    title="Details anzeigen"
+                                >
+                                    <fa-icon [icon]="faSearchPlus"></fa-icon>
+                                </a>
+                            </td>
+                            <td *ngIf="isAdmin">
+                                <a (click)="onRemove(s)" title="Entfernen">
+                                    <fa-icon [icon]="faTrash"></fa-icon>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div>
+                    <fa-icon [icon]="faInfoCircle"></fa-icon>
+                    <span class="ml-1" [ngPlural]="spiele.length">
+                        <!-- zu vergleichender Ausdruck -->
+                        <ng-template ngPluralCase="=0">
+                            Es gibt kein Spiel
+                        </ng-template>
+                        <ng-template ngPluralCase="=1">
+                            Es gibt ein Spiel
+                        </ng-template>
+                        <ng-template ngPluralCase="other">
+                            Es gibt {{ spiele.length }} Spiele
+                        </ng-template>
+                    </span>
+                </div>
+
+                <div>
+                    <fa-icon [icon]="faInfoCircle"></fa-icon>
+                    <span class="ml-1">
+                        Zur Anzeige der JSON-Datens&auml;tze in
+                        suchergebnis.html am Dateiende den Kommentar beim Tag
+                        &lt;pre&gt; entfernen
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!--
+            Ausgabe des JSON-Datensatzes im Webbrowser statt console.log(...)
+        -->
+        <!-- <pre>{{buecher | json}}</pre> -->
+
+        <ng-template #showErrorMsg>
+            <hs-error-message [text]="errorMsg"></hs-error-message>
+        </ng-template>
+    </ng-template>
+</div>
