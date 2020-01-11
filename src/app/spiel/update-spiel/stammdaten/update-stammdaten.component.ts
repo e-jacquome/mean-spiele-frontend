@@ -98,7 +98,7 @@ export class UpdateStammdatenComponent implements OnInit, OnDestroy {
             this.spiel.datum,
             this.spiel.preis,
             this.spiel.rabatt,
-            this.form.value.isbn,
+            //this.form.value.isbn,
         );
         console.log('spiel=', this.spiel);
 

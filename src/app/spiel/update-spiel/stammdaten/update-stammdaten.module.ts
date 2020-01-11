@@ -32,7 +32,7 @@ import { UpdateVerlagModule } from './update-verlag.module';
         ReactiveFormsModule,
         FontAwesomeModule,
         UpdateArtModule,
-        UpdateIsbnModule,
+        //UpdateIsbnModule,
         UpdateRatingModule,
         UpdateTitelModule,
         UpdateVerlagModule,

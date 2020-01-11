@@ -15,36 +15,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <form [formGroup]="form" role="form">
-    <div class="form-group row">
-        <div class="col">
-            <div class="checkbox">
-                <input
-                    type="checkbox"
-                    id="soloInput"
-                    formControlName="solo"
-                />
-                <label for="soloInput">Solo</label>
-            </div>
-            <div class="checkbox">
-                <input
-                    type="checkbox"
-                    id="typescriptInput"
-                    formControlName="typescript"
-                />
-                <label for="typescriptInput">TypeScript</label>
-            </div>
-        </div>
-    </div>
+    <hs-update-titel [form]="form" [currentValue]="spiel.titel">
+    </hs-update-titel>
+    <hs-update-art [form]="form" [currentValue]="spiel.art"> </hs-update-art>
+    <hs-update-verlag [form]="form" [currentValue]="spiel.verlag">
+    </hs-update-verlag>
+    <hs-update-rating [form]="form" [currentValue]="spiel.rating">
+    </hs-update-rating>
+    <!-- <hs-update-isbn [form]="form" [currentValue]="spiel.isbn"> </hs-update-isbn> -->
 
     <div class="form-group row">
-        <div class="col">
+        <div class="col offset-2">
             <button
                 class="btn btn-primary"
                 (click)="onUpdate()"
                 [disabled]="form.pristine || !form.valid"
             >
                 <fa-icon [icon]="faCheck"></fa-icon>
-                <span class="ml-1">Schlagw&ouml;rter aktualisieren</span>
+                <span class="ml-1">Stammdaten aktualisieren</span>
             </button>
         </div>
     </div>

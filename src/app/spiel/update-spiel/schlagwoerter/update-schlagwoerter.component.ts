@@ -38,7 +38,7 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
 
     form!: FormGroup;
     solo!: FormControl;
-    typescript!: FormControl;
+    team!: FormControl;
 
     readonly faCheck = faCheck;
 
@@ -59,15 +59,15 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
         console.log('spiel=', this.spiel);
 
         // Definition und Vorbelegung der Eingabedaten (hier: Checkbox)
-        const hasSolo = this.spiel.hasSchlagwort('JAVASCRIPT');
+        const hasSolo = this.spiel.hasSchlagwort('SOLO');
         this.solo = new FormControl(hasSolo);
-        const hasTypeScript = this.spiel.hasSchlagwort('TYPESCRIPT');
-        this.typescript = new FormControl(hasTypeScript);
+        const hasTeam = this.spiel.hasSchlagwort('TEAM');
+        this.team = new FormControl(hasTeam);
 
         this.form = new FormGroup({
             // siehe ngFormControl innerhalb von @Component({template: `...`})
             solo: this.solo,
-            typescript: this.typescript,
+            team: this.team,
         });
     }
 
@@ -101,7 +101,7 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
 
         this.spiel.updateSchlagwoerter(
             this.solo.value,
-            this.typescript.value,
+            this.team.value,
         );
         console.log('spiel=', this.spiel);
 
