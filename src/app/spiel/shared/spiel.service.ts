@@ -522,7 +522,7 @@ export class SpielService {
         let httpParams = new HttpParams();
 
         const { titel, verlag, art, schlagwoerter } = suchkriterien;
-        const { javascript, typescript } = schlagwoerter;
+        const { solo, team } = schlagwoerter;
 
         if (titel !== '') {
             httpParams = httpParams.set('titel', titel);
@@ -533,11 +533,11 @@ export class SpielService {
         if (verlag !== '') {
             httpParams = httpParams.set('verlag', verlag);
         }
-        if (javascript === true) {
-            httpParams = httpParams.set('javascript', 'true');
+        if (solo === true) {
+            httpParams = httpParams.set('solo', 'true');
         }
-        if (typescript === true) {
-            httpParams = httpParams.set('typescript', 'true');
+        if (team === true) {
+            httpParams = httpParams.set('team', 'true');
         }
         return httpParams;
     }
@@ -562,5 +562,5 @@ export interface Suchkriterien {
     titel: string;
     verlag: Verlag | '';
     art: SpielArt | '';
-    schlagwoerter: { javascript: boolean; typescript: boolean };
+    schlagwoerter: { solo: boolean; team: boolean };
 }
