@@ -99,10 +99,7 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
             return undefined;
         }
 
-        this.spiel.updateSchlagwoerter(
-            this.solo.value,
-            this.team.value,
-        );
+        this.spiel.updateSchlagwoerter(this.solo.value, this.team.value);
         console.log('spiel=', this.spiel);
 
         const successFn = () => {

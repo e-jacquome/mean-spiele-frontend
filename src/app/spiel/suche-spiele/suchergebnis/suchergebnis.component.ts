@@ -63,14 +63,14 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     readonly faSearchPlus = faSearchPlus;
     readonly faTrash = faTrash;
 
-    private spieleSubscription!: Subscription;
+    private spielSubscription!: Subscription;
     private errorSubscription!: Subscription;
     private removeDescription: Subscription | undefined;
 
     // Empfehlung: Konstruktor nur fuer DI
     // eslint-disable-next-line max-params
     constructor(
-        private readonly spieleService: spieleService,
+        private readonly spielService: SpielService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly authService: AuthService,
@@ -101,7 +101,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.spieleSubscription.unsubscribe();
+        this.spielSubscription.unsubscribe();
         this.errorSubscription.unsubscribe();
 
         if (this.removeDescription !== undefined) {
@@ -139,9 +139,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
             errorFn,
         );
         if (this.spiele.length > 0) {
-            this.spiele = this.spiele.filter(
-                (s: Spiele) => s._id !== spiel._id,
-            );
+            this.spiele = this.spiele.filter((s: Spiel) => s._id !== spiel._id);
         }
     }
 
@@ -206,7 +204,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
             console.log(`SuchErgebnisComponent.errorMsg: ${this.errorMsg}`);
         };
 
-        return this.spieleService.errorSubject.subscribe(next);
+        return this.spielService.errorSubject.subscribe(next);
     }
 
     private reset() {
