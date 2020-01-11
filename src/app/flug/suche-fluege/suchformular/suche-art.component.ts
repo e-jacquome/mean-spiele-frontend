@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { FlugArt } from '../../shared/flug';
+import { SpielArt } from '../../shared/spiel';
 import { Component } from '@angular/core';
 import { fadeIn } from '../../../shared';
 
@@ -28,7 +28,7 @@ import { fadeIn } from '../../../shared';
     animations: [fadeIn],
 })
 export class SucheArtComponent {
-    art: FlugArt | '' = '';
+    art: SpielArt | '' = '';
 
     constructor() {
         console.log('SucheArtComponent.constructor()');

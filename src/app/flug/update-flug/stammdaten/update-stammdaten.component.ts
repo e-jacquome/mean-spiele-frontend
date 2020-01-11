@@ -20,8 +20,8 @@ import {
     faCheck,
     faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { Flug } from '../../shared/flug';
-import { FlugService } from '../../shared/flug.service';
+import { Spiel } from '../../shared/spiel';
+import { SpielService } from '../../shared/spiel.service';
 import { FormGroup } from '@angular/forms';
 import { HOME_PATH } from '../../../shared';
 import { Router } from '@angular/router';
@@ -35,9 +35,9 @@ import { Subscription } from 'rxjs';
     templateUrl: './update-stammdaten.component.html',
 })
 export class UpdateStammdatenComponent implements OnInit, OnDestroy {
-    // <hs-update-stammdaten [flug]="...">
+    // <hs-update-stammdaten [spiel]="...">
     @Input()
-    readonly flug!: Flug;
+    readonly spiel!: Spiel;
 
     readonly form = new FormGroup({});
 
@@ -47,7 +47,7 @@ export class UpdateStammdatenComponent implements OnInit, OnDestroy {
     private updateSubscription: Subscription | undefined;
 
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly router: Router,
     ) {
         console.log('UpdateStammdatenComponent.constructor()');
@@ -55,10 +55,10 @@ export class UpdateStammdatenComponent implements OnInit, OnDestroy {
 
     /**
      * Das Formular als Gruppe von Controls initialisieren und mit den
-     * Stammdaten des zu &auml;ndernden Flugs vorbelegen.
+     * Stammdaten des zu &auml;ndernden Spiels vorbelegen.
      */
     ngOnInit() {
-        console.log('UpdateStammdatenComponent.ngOnInit(): flug=', this.flug);
+        console.log('UpdateStammdatenComponent.ngOnInit(): spiel=', this.spiel);
     }
 
     ngOnDestroy() {
@@ -68,7 +68,7 @@ export class UpdateStammdatenComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Die aktuellen Stammdaten f&uuml;r das angezeigte Flug-Objekt
+     * Die aktuellen Stammdaten f&uuml;r das angezeigte Spiel-Objekt
      * zur&uuml;ckschreiben.
      * @return false, um das durch den Button-Klick ausgel&ouml;ste Ereignis
      *         zu konsumieren.
@@ -82,25 +82,25 @@ export class UpdateStammdatenComponent implements OnInit, OnDestroy {
             return undefined;
         }
 
-        if (this.flug === undefined) {
+        if (this.spiel === undefined) {
             console.error(
-                'UpdateStammdatenComponent.onUpdate(): flug === undefined',
+                'UpdateStammdatenComponent.onUpdate(): spiel === undefined',
             );
             return undefined;
         }
 
         // rating, preis und rabatt koennen im Formular nicht geaendert werden
-        this.flug.updateStammdaten(
+        this.spiel.updateStammdaten(
             this.form.value.titel,
             this.form.value.art,
             this.form.value.verlag,
             this.form.value.rating,
-            this.flug.datum,
-            this.flug.preis,
-            this.flug.rabatt,
+            this.spiel.datum,
+            this.spiel.preis,
+            this.spiel.rabatt,
             this.form.value.isbn,
         );
-        console.log('flug=', this.flug);
+        console.log('spiel=', this.spiel);
 
         const successFn = () => {
             console.log(
@@ -133,8 +133,8 @@ export class UpdateStammdatenComponent implements OnInit, OnDestroy {
             );
         };
 
-        this.updateSubscription = this.flugService.update(
-            this.flug,
+        this.updateSubscription = this.spielService.update(
+            this.spiel,
             successFn,
             errorFn,
         );

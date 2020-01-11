@@ -14,8 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<section *ngIf="flug">
-    <h4>Flug {{ flug._id }}:</h4>
+<section *ngIf="spiel">
+    <h4>Spiel {{ spiel._id }}:</h4>
 
     <ul class="nav nav-tabs" id="kundeUpdate">
         <li class="nav-item">
@@ -31,7 +31,7 @@
                 Stammdaten
             </a>
         </li>
-        <li class="nav-item" *ngIf="flug.hasSchlagwoerter()">
+        <li class="nav-item" *ngIf="spiel.hasSchlagwoerter()">
             <a
                 class="nav-link"
                 id="schlagwoerter-update-tab"
@@ -54,7 +54,7 @@
             aria-labelledby="stammdaten-tab"
         >
             <div class="mt-1">
-                <hs-update-stammdaten [flug]="flug"> </hs-update-stammdaten>
+                <hs-update-stammdaten [spiel]="spiel"> </hs-update-stammdaten>
             </div>
         </div>
         <div
@@ -62,10 +62,10 @@
             id="schlagwoerter"
             role="tabpanel"
             aria-labelledby="schlagwoerter-tab"
-            *ngIf="flug.hasSchlagwoerter()"
+            *ngIf="spiel.hasSchlagwoerter()"
         >
             <div class="mt-1">
-                <hs-update-schlagwoerter [flug]="flug">
+                <hs-update-schlagwoerter [spiel]="spiel">
                 </hs-update-schlagwoerter>
             </div>
         </div>

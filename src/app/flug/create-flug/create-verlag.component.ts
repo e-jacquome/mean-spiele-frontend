@@ -21,7 +21,7 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Komponente mit dem Tag &lt;hs-create-verlag&gt;, um das Erfassungsformular
- * f&uuml;r ein neues Flug zu realisieren.
+ * f&uuml;r ein neues Spiel zu realisieren.
  */
 @Component({
     selector: 'hs-create-verlag',

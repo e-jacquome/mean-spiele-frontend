@@ -20,7 +20,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 /**
  * Komponente mit dem Tag &lt;hs-create-schlagwoerter&gt;, um das Erfassungsformular
- * f&uuml;r ein neues Flug zu realisieren.
+ * f&uuml;r ein neues Spiel zu realisieren.
  */
 @Component({
     selector: 'hs-create-schlagwoerter',

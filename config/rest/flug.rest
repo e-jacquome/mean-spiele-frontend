@@ -12,83 +12,83 @@ Content-Type: application/x-www-form-urlencoded
 
 username=admin&password=p
 
-### Suche alle Fluege
+### Suche alle Spiele
 https://{{host}}
 Authorization: {{basic_auth_admin}}
 
-### Suche mit vorhandener Flug-ID
-https://{{host}}/fluege/00000000-0000-0000-0000-000000000001
+### Suche mit vorhandener Spiel-ID
+https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
 
-### Suche mit vorhandener Flug-ID und Versionsnummer
-https://{{host}}/fluege/00000000-0000-0000-0000-000000000001
+### Suche mit vorhandener Spiel-ID und Versionsnummer
+https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
 If-None-Match: 0
 
-### Optionen zu Flug-ID
-OPTIONS https://{{host}}/fluege/00000000-0000-0000-0000-000000000001
+### Optionen zu Spiel-ID
+OPTIONS https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
 
-### Suche mit ungueltiger Flug-ID
-https://{{host}}/fluege/YYYYYYYY-YYYY-YYYY-YYYY-YYYYYYYYYYYY
+### Suche mit ungueltiger Spiel-ID
+https://{{host}}/spiele/YYYYYYYY-YYYY-YYYY-YYYY-YYYYYYYYYYYY
 
-### Suche mit nicht-vorhandener Flug-ID
-https://{{host}}/fluege/99999999-9999-9999-9999-999999999999
+### Suche mit nicht-vorhandener Spiel-ID
+https://{{host}}/spiele/99999999-9999-9999-9999-999999999999
 
 ### Suche mit vorhandenem Titel
-https://{{host}}/fluege?titel=a
+https://{{host}}/spiele?titel=a
 
 ### Suche mit vorhandener ISBN-Nummber
-https://{{host}}/fluege?isbn=000-0-00000-000-1
+https://{{host}}/spiele?isbn=000-0-00000-000-1
 
 ### Suche mit vorhandenen Schlagwoertern
-https://{{host}}/fluege?javascript=true&typescript=true
+https://{{host}}/spiele?javascript=true&typescript=true
 
-### Suche mit gueltiger Flugart
-https://{{host}}/fluege?art=KINDLE
+### Suche mit gueltiger Spielart
+https://{{host}}/spiele?art=KINDLE
 
 ### Suche mit gueltigem Rating
-https://{{host}}/fluege?rating=1
+https://{{host}}/spiele?rating=1
 
-### Suche lieferbare Fluege
-https://{{host}}/fluege?lieferbar=true
+### Suche lieferbare Spiele
+https://{{host}}/spiele?lieferbar=true
 
-### Neues Flug anlegen
-POST https://{{host}}/fluege
+### Neues Spiel anlegen
+POST https://{{host}}/spiele
 Content-Type: application/json
 Authorization: {{token}}
 
-< ./config/rest/flug-neu.json
+< ./config/rest/spiel-neu.json
 
-### Neues Flug mit ungueltigen Daten anlegen
-POST https://{{host}}/fluege
+### Neues Spiel mit ungueltigen Daten anlegen
+POST https://{{host}}/spiele
 Content-Type: application/json
 Authorization: {{token}}
 
-< ./config/rest/flug-neu-invalid.json
+< ./config/rest/spiel-neu-invalid.json
 
-### Vorhandenes Flug aktualisieren
-PUT https://{{host}}/fluege/00000000-0000-0000-0000-000000000003
-Content-Type: application/json
-Authorization: {{token}}
-If-Match: 0
-
-< ./config/rest/flug-3-put.json
-
-### Vorhandenes Flug *OHNE* Versionsnummer aktualisieren
-PUT https://{{host}}/fluege/00000000-0000-0000-0000-000000000003
-Content-Type: application/json
-Authorization: {{token}}
-
-< ./config/rest/flug-3-put.json
-
-### Vorhandenes Flug mit ungueltigen Daten aktualisieren
-PUT https://{{host}}/fluege/00000000-0000-0000-0000-000000000003
+### Vorhandenes Spiel aktualisieren
+PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
 Content-Type: application/json
 Authorization: {{token}}
 If-Match: 0
 
-< ./config/rest/flug-3-put-invalid.json
+< ./config/rest/spiel-3-put.json
 
-### Loeschen eines vorhandenen Fluges
-DELETE https://{{host}}/fluege/00000000-0000-0000-0000-000000000005
+### Vorhandenes Spiel *OHNE* Versionsnummer aktualisieren
+PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
+Content-Type: application/json
+Authorization: {{token}}
+
+< ./config/rest/spiel-3-put.json
+
+### Vorhandenes Spiel mit ungueltigen Daten aktualisieren
+PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
+Content-Type: application/json
+Authorization: {{token}}
+If-Match: 0
+
+< ./config/rest/spiel-3-put-invalid.json
+
+### Loeschen eines vorhandenen Spieles
+DELETE https://{{host}}/spiele/00000000-0000-0000-0000-000000000005
 Authorization: {{token}}
 
 ###

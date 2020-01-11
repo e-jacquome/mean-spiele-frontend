@@ -38,6 +38,6 @@ const BASE_PATH = '';
 export const BASE_URI = `${SCHEME}://${SERVERNAME}:${PORT}${BASE_PATH}`;
 
 /**
- * Pfad beim REST-Server fuer fluege
+ * Pfad beim REST-Server fuer spiele
  */
-export const FLUEGE_PATH_REST = '/';
+export const SPIELE_PATH_REST = '/';

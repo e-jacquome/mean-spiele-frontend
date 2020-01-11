@@ -19,7 +19,7 @@
 
 // Bereitgestellt durch das RouterModule
 import { ActivatedRoute, Router } from '@angular/router';
-import { FlugService, Suchkriterien } from '../../shared/flug.service';
+import { SpielService, Suchkriterien } from '../../shared/spiel.service';
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { HttpStatus, easeIn, easeOut } from '../../../shared';
 import {
@@ -29,7 +29,7 @@ import {
     faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../../auth/auth.service';
-import { Flug } from '../../shared/flug';
+import { Spiel } from '../../shared/spiel';
 import { NgLocalization } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -54,7 +54,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
 
     waiting = false;
 
-    fluege: Array<Flug> = [];
+    spiele: Array<Spiel> = [];
     errorMsg: string | undefined;
     isAdmin!: boolean;
 
@@ -63,14 +63,14 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     readonly faSearchPlus = faSearchPlus;
     readonly faTrash = faTrash;
 
-    private fluegeSubscription!: Subscription;
+    private spieleSubscription!: Subscription;
     private errorSubscription!: Subscription;
     private removeDescription: Subscription | undefined;
 
     // Empfehlung: Konstruktor nur fuer DI
     // eslint-disable-next-line max-params
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly authService: AuthService,
@@ -84,7 +84,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.waiting = true;
-        this.flugService.find(this.suchkriterien);
+        this.spielService.find(this.suchkriterien);
     }
 
     // Attribute mit @Input() sind undefined im Konstruktor.
@@ -95,13 +95,13 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     // Die Ableitung vom Interface OnInit ist nicht notwendig, aber erleichtet
     // IntelliSense bei der Verwendung von TypeScript.
     ngOnInit() {
-        this.fluegeSubscription = this.subscribeFluege();
+        this.spieleSubscription = this.subscribeSpiele();
         this.errorSubscription = this.subscribeError();
         this.isAdmin = this.authService.isAdmin;
     }
 
     ngOnDestroy() {
-        this.fluegeSubscription.unsubscribe();
+        this.spieleSubscription.unsubscribe();
         this.errorSubscription.unsubscribe();
 
         if (this.removeDescription !== undefined) {
@@ -110,55 +110,55 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     /**
-     * Das ausgew&auml;hlte bzw. angeklickte Flug in der Detailsseite anzeigen.
-     * @param flug Das ausgew&auml;hlte Flug
+     * Das ausgew&auml;hlte bzw. angeklickte Spiel in der Detailsseite anzeigen.
+     * @param spiel Das ausgew&auml;hlte Spiel
      */
-    onSelect(flug: Flug) {
-        console.log('SuchergebnisComponent.onSelect(): flug=', flug);
+    onSelect(spiel: Spiel) {
+        console.log('SuchergebnisComponent.onSelect(): spiel=', spiel);
         // TODO: NavigationExtras beim Routing
         // https://github.com/angular/angular/pull/27198
         // https://github.com/angular/angular/commit/67f4a5d4bd3e8e6a35d85500d630d94db061900b
         /* eslint-disable object-curly-newline */
-        return this.router.navigate(['..', flug._id], {
+        return this.router.navigate(['..', spiel._id], {
             relativeTo: this.route,
         });
     }
 
     /**
-     * Das ausgew&auml;hlte bzw. angeklickte Flug l&ouml;schen.
-     * @param flug Das ausgew&auml;hlte Flug
+     * Das ausgew&auml;hlte bzw. angeklickte Spiel l&ouml;schen.
+     * @param spiel Das ausgew&auml;hlte Spiel
      */
-    onRemove(flug: Flug) {
-        console.log('SuchergebnisComponent.onRemove(): flug=', flug);
+    onRemove(spiel: Spiel) {
+        console.log('SuchergebnisComponent.onRemove(): spiel=', spiel);
         const successFn: (() => void) | undefined = undefined;
         const errorFn = (status: number) =>
             console.error(`Fehler beim Loeschen: status=${status}`);
-        this.removeDescription = this.flugService.remove(
-            flug,
+        this.removeDescription = this.spielService.remove(
+            spiel,
             successFn,
             errorFn,
         );
-        if (this.fluege.length > 0) {
-            this.fluege = this.fluege.filter((b: Flug) => b._id !== flug._id);
+        if (this.spiele.length > 0) {
+            this.spiele = this.spiele.filter((b: Spiel) => b._id !== spiel._id);
         }
     }
 
     /**
-     * Methode, um den injizierten <code>FlugService</code> zu beobachten,
+     * Methode, um den injizierten <code>SpielService</code> zu beobachten,
      * ob es gefundene bzw. darzustellende B&uuml;cher gibt, die in der
-     * Kindkomponente f&uuml;r das Tag <code>gefundene-fluege</code>
+     * Kindkomponente f&uuml;r das Tag <code>gefundene-spiele</code>
      * dargestellt werden. Diese private Methode wird in der Methode
      * <code>ngOnInit</code> aufgerufen.
      */
-    private subscribeFluege() {
-        const next = (fluege: Array<Flug>) => {
+    private subscribeSpiele() {
+        const next = (spiele: Array<Spiel>) => {
             this.reset();
             this.errorMsg = undefined;
 
-            this.fluege = fluege;
+            this.spiele = spiele;
             console.log(
-                'SuchErgebnisComponent.subscribeFluege: this.fluege=',
-                this.fluege,
+                'SuchErgebnisComponent.subscribeSpiele: this.spiele=',
+                this.spiele,
             );
         };
 
@@ -168,11 +168,11 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
         // http://stackoverflow.com/questions/34533197/what-is-the-difference-between-rx-observable-subscribe-and-foreach
         // https://xgrommx.github.io/rx-book/content/observable/observable_instance_methods/subscribe.html
         // Funktion als Funktionsargument, d.h. Code als Daten uebergeben
-        return this.flugService.fluegeSubject.subscribe(next);
+        return this.spielService.spieleSubject.subscribe(next);
     }
 
     /**
-     * Methode, um den injizierten <code>FlugService</code> zu beobachten,
+     * Methode, um den injizierten <code>SpielService</code> zu beobachten,
      * ob es bei der Suche Fehler gibt, die in der Kindkomponente f&uuml;r das
      * Tag <code>error-message</code> dargestellt werden. Diese private Methode
      * wird in der Methode <code>ngOnInit</code> aufgerufen.
@@ -180,7 +180,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
     private subscribeError() {
         const next = (err: string | number | undefined) => {
             this.reset();
-            this.fluege = [];
+            this.spiele = [];
 
             console.log('SuchErgebnisComponent.subscribeError: err=', err);
             if (err === undefined) {
@@ -204,7 +204,7 @@ export class SuchergebnisComponent implements OnChanges, OnInit, OnDestroy {
             console.log(`SuchErgebnisComponent.errorMsg: ${this.errorMsg}`);
         };
 
-        return this.flugService.errorSubject.subscribe(next);
+        return this.spielService.errorSubject.subscribe(next);
     }
 
     private reset() {

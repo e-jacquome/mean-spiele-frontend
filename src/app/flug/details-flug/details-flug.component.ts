@@ -18,26 +18,26 @@
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService, ROLLE_ADMIN } from '../../auth/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Flug } from '../shared/flug';
-import { FlugService } from '../shared/flug.service';
+import { Spiel } from '../shared/spiel';
+import { SpielService } from '../shared/spiel.service';
 import { HttpStatus } from '../../shared';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
 /**
- * Komponente f&uuml;r das Tag <code>hs-details-flug</code>
+ * Komponente f&uuml;r das Tag <code>hs-details-spiel</code>
  */
 @Component({
-    selector: 'hs-details-flug',
-    templateUrl: './details-flug.component.html',
+    selector: 'hs-details-spiel',
+    templateUrl: './details-spiel.component.html',
 })
-export class DetailsFlugComponent implements OnInit, OnDestroy {
+export class DetailsSpielComponent implements OnInit, OnDestroy {
     waiting = true;
-    flug: Flug | undefined;
+    spiel: Spiel | undefined;
     errorMsg: string | undefined;
     isAdmin!: boolean;
 
-    private flugSubscription!: Subscription;
+    private spielSubscription!: Subscription;
     private errorSubscription!: Subscription;
     private idParamSubscription!: Subscription;
     private isAdminSubscription!: Subscription;
@@ -45,18 +45,18 @@ export class DetailsFlugComponent implements OnInit, OnDestroy {
 
     // eslint-disable-next-line max-params
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly titleService: Title,
         private readonly route: ActivatedRoute,
         private readonly authService: AuthService,
     ) {
-        console.log('DetailsFlugComponent.constructor()');
+        console.log('DetailsSpielComponent.constructor()');
     }
 
     ngOnInit() {
-        // Die Beobachtung starten, ob es ein zu darzustellendes Flug oder
+        // Die Beobachtung starten, ob es ein zu darzustellendes Spiel oder
         // einen Fehler gibt.
-        this.flugSubscription = this.subscribeFlug();
+        this.spielSubscription = this.subscribeSpiel();
         this.errorSubscription = this.subscribeError();
         this.idParamSubscription = this.subscribeIdParam();
 
@@ -66,7 +66,7 @@ export class DetailsFlugComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.flugSubscription.unsubscribe();
+        this.spielSubscription.unsubscribe();
         this.errorSubscription.unsubscribe();
         this.idParamSubscription.unsubscribe();
         this.isAdminSubscription.unsubscribe();
@@ -76,18 +76,18 @@ export class DetailsFlugComponent implements OnInit, OnDestroy {
         }
     }
 
-    private subscribeFlug() {
-        const next = (flug: Flug) => {
+    private subscribeSpiel() {
+        const next = (spiel: Spiel) => {
             this.waiting = false;
-            this.flug = flug;
-            console.log('DetailsFlugComponent.flug=', this.flug);
+            this.spiel = spiel;
+            console.log('DetailsSpielComponent.spiel=', this.spiel);
             const titel =
-                this.flug === undefined
+                this.spiel === undefined
                     ? 'Details'
-                    : `Details ${this.flug._id}`;
+                    : `Details ${this.spiel._id}`;
             this.titleService.setTitle(titel);
         };
-        return this.flugService.flugSubject.subscribe(next);
+        return this.spielService.spielSubject.subscribe(next);
     }
 
     private subscribeError() {
@@ -105,25 +105,25 @@ export class DetailsFlugComponent implements OnInit, OnDestroy {
 
             this.errorMsg =
                 err === HttpStatus.NOT_FOUND
-                    ? 'Kein Flug gefunden.'
+                    ? 'Kein Spiel gefunden.'
                     : 'Ein Fehler ist aufgetreten.';
-            console.log(`DetailsFlugComponent.errorMsg: ${this.errorMsg}`);
+            console.log(`DetailsSpielComponent.errorMsg: ${this.errorMsg}`);
 
             this.titleService.setTitle('Fehler');
         };
 
-        return this.flugService.errorSubject.subscribe(next);
+        return this.spielService.errorSubject.subscribe(next);
     }
 
     private subscribeIdParam() {
-        // Pfad-Parameter aus /fluege/:id
+        // Pfad-Parameter aus /spiele/:id
         // UUID (oder Mongo-ID) ist ein String
         const next = (params: Params) => {
             console.log(
-                'DetailsFlugComponent.subscribeIdParam(): params=',
+                'DetailsSpielComponent.subscribeIdParam(): params=',
                 params,
             );
-            this.findByIdSubscription = this.flugService.findById(params.id);
+            this.findByIdSubscription = this.spielService.findById(params.id);
         };
         // ActivatedRoute.params ist ein Observable
         return this.route.params.subscribe(next);
@@ -133,7 +133,7 @@ export class DetailsFlugComponent implements OnInit, OnDestroy {
         const nextIsAdmin = (event: Array<string>) => {
             this.isAdmin = event.includes(ROLLE_ADMIN);
             console.log(
-                `DetailsFlugComponent.subscribeIsAdmin(): isAdmin=${this.isAdmin}`,
+                `DetailsSpielComponent.subscribeIsAdmin(): isAdmin=${this.isAdmin}`,
             );
         };
         return this.authService.rollenSubject.subscribe(nextIsAdmin);

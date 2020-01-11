@@ -20,8 +20,8 @@ import {
     faCheck,
     faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
-import { Flug } from '../shared/flug';
-import { FlugService } from '../shared/flug.service';
+import { Spiel } from '../shared/spiel';
+import { SpielService } from '../shared/spiel.service';
 import { FormGroup } from '@angular/forms';
 import { HOME_PATH } from '../../shared';
 import { Router } from '@angular/router';
@@ -30,14 +30,14 @@ import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
 /**
- * Komponente mit dem Tag &lt;create-flug&gt;, um das Erfassungsformular
- * f&uuml;r ein neues Flug zu realisieren.
+ * Komponente mit dem Tag &lt;create-spiel&gt;, um das Erfassungsformular
+ * f&uuml;r ein neues Spiel zu realisieren.
  */
 @Component({
-    selector: 'hs-create-flug',
-    templateUrl: './create-flug.component.html',
+    selector: 'hs-create-spiel',
+    templateUrl: './create-spiel.component.html',
 })
-export class CreateFlugComponent implements OnInit, OnDestroy {
+export class CreateSpielComponent implements OnInit, OnDestroy {
     form = new FormGroup({});
     showWarning = false;
     fertig = false;
@@ -50,18 +50,18 @@ export class CreateFlugComponent implements OnInit, OnDestroy {
     private saveSubscription: Subscription | undefined;
 
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly router: Router,
         private readonly titleService: Title,
     ) {
-        console.log('CreateFlugComponent.constructor()');
+        console.log('CreateSpielComponent.constructor()');
         if (router !== undefined) {
             console.log('Injizierter Router:', router);
         }
     }
 
     ngOnInit() {
-        this.titleService.setTitle('Neues Flug');
+        this.titleService.setTitle('Neues Spiel');
     }
 
     ngOnDestroy() {
@@ -72,7 +72,7 @@ export class CreateFlugComponent implements OnInit, OnDestroy {
 
     /**
      * Die Methode <code>save</code> realisiert den Event-Handler, wenn das
-     * Formular abgeschickt wird, um ein neues Flug anzulegen.
+     * Formular abgeschickt wird, um ein neues Spiel anzulegen.
      * @return false, um das durch den Button-Klick ausgel&ouml;ste Ereignis
      *         zu konsumieren.
      */
@@ -88,36 +88,36 @@ export class CreateFlugComponent implements OnInit, OnDestroy {
 
         if (!this.form.valid) {
             console.log(
-                'CreateFlugComponent.onSave(): Validierungsfehler',
+                'CreateSpielComponent.onSave(): Validierungsfehler',
                 this.form,
             );
             return false;
         }
 
-        const neuesFlug = Flug.fromForm(this.form.value);
-        console.log('CreateFlugComponent.onSave(): neuesFlug=', neuesFlug);
+        const neuesSpiel = Spiel.fromForm(this.form.value);
+        console.log('CreateSpielComponent.onSave(): neuesSpiel=', neuesSpiel);
 
         const successFn = (location: string | undefined) => {
             console.log(
-                `CreateFlugComponent.onSave(): successFn(): location=${location}, navigate=${HOME_PATH}`,
+                `CreateSpielComponent.onSave(): successFn(): location=${location}, navigate=${HOME_PATH}`,
             );
             this.fertig = true;
             this.showWarning = false;
             this.router.navigate([HOME_PATH]).then(
                 navResult => {
                     if (navResult) {
-                        console.log('CreateFlug.onSave(): Navigation');
+                        console.log('CreateSpiel.onSave(): Navigation');
                         this.errorMsg = undefined;
                     } else {
                         console.error(
-                            'CreateFlug.onSave(): Navigation fehlgeschlagen',
+                            'CreateSpiel.onSave(): Navigation fehlgeschlagen',
                         );
                         this.errorMsg = 'Navigation fehlgeschlagen';
                     }
                 },
                 () => {
                     console.error(
-                        'CreateFlug.onSave(): Navigation fehlgeschlagen',
+                        'CreateSpiel.onSave(): Navigation fehlgeschlagen',
                     );
                     this.errorMsg = 'Navigation fehlgeschlagen';
                 },
@@ -128,13 +128,13 @@ export class CreateFlugComponent implements OnInit, OnDestroy {
             errors: { [s: string]: any } | undefined, // eslint-disable-line @typescript-eslint/no-explicit-any
         ) => {
             console.error(
-                `CreateFlug.onSave(): errorFn(): status: ${status}, errors`,
+                `CreateSpiel.onSave(): errorFn(): status: ${status}, errors`,
                 errors,
             );
             this.errorMsg = errors;
         };
-        this.saveSubscription = this.flugService.save(
-            neuesFlug,
+        this.saveSubscription = this.spielService.save(
+            neuesSpiel,
             successFn,
             errorFn,
         );

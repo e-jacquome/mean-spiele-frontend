@@ -15,16 +15,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<div *ngIf="flug">
-    <hs-details-titel [titel]="flug.titel"></hs-details-titel>
+<div *ngIf="spiel">
+    <hs-details-titel [titel]="spiel.titel"></hs-details-titel>
     <hs-details-bewertung
-        [ratingArray]="flug.ratingArray"
+        [ratingArray]="spiel.ratingArray"
     ></hs-details-bewertung>
-    <hs-details-art [art]="flug.art"></hs-details-art>
-    <hs-details-verlag [verlag]="flug.verlag"></hs-details-verlag>
-    <hs-details-datum [formatted]="flug.datumFormatted"></hs-details-datum>
-    <hs-details-preis [preis]="flug.preis"></hs-details-preis>
-    <hs-details-rabatt [rabatt]="flug.rabatt"></hs-details-rabatt>
-    <hs-details-lieferbar [lieferbar]="flug.lieferbar"></hs-details-lieferbar>
-    <hs-details-isbn [isbn]="flug.isbn"></hs-details-isbn>
+    <hs-details-art [art]="spiel.art"></hs-details-art>
+    <hs-details-verlag [verlag]="spiel.verlag"></hs-details-verlag>
+    <hs-details-datum [formatted]="spiel.datumFormatted"></hs-details-datum>
+    <hs-details-preis [preis]="spiel.preis"></hs-details-preis>
+    <hs-details-rabatt [rabatt]="spiel.rabatt"></hs-details-rabatt>
+    <hs-details-lieferbar [lieferbar]="spiel.lieferbar"></hs-details-lieferbar>
+    <hs-details-isbn [isbn]="spiel.isbn"></hs-details-isbn>
 </div>

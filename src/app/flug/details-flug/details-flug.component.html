@@ -20,8 +20,8 @@
 <ng-template #details>
     <hs-details-breadcrumbs></hs-details-breadcrumbs>
 
-    <section class="mt-1" *ngIf="flug; else showErrorMsg">
-        <h4>Flug {{ flug._id }}:</h4>
+    <section class="mt-1" *ngIf="spiel; else showErrorMsg">
+        <h4>Spiel {{ spiel._id }}:</h4>
 
         <!-- https://getbootstrap.com/docs/4.0/components/navs/#tabs -->
         <!-- jQuery erfordert id -->
@@ -39,7 +39,7 @@
                     Stammdaten
                 </a>
             </li>
-            <li class="nav-item" *ngIf="flug.hasSchlagwoerter()">
+            <li class="nav-item" *ngIf="spiel.hasSchlagwoerter()">
                 <a
                     class="nav-link"
                     id="schlagwoerter-tab"
@@ -62,7 +62,7 @@
                 aria-labelledby="stammdaten-tab"
             >
                 <div class="mt-2">
-                    <hs-details-stammdaten [flug]="flug">
+                    <hs-details-stammdaten [spiel]="spiel">
                     </hs-details-stammdaten>
                 </div>
             </div>
@@ -72,16 +72,16 @@
                 id="schlagwoerter"
                 role="tabpanel"
                 aria-labelledby="schlagwoerter-tab"
-                *ngIf="flug.hasSchlagwoerter()"
+                *ngIf="spiel.hasSchlagwoerter()"
             >
                 <div class="mt-2">
-                    <hs-details-schlagwoerter [values]="flug.schlagwoerter">
+                    <hs-details-schlagwoerter [values]="spiel.schlagwoerter">
                     </hs-details-schlagwoerter>
                 </div>
             </div>
         </div>
 
-        <hs-details-bearbeiten [id]="flug._id" *ngIf="isAdmin">
+        <hs-details-bearbeiten [id]="spiel._id" *ngIf="isAdmin">
         </hs-details-bearbeiten>
     </section>
 

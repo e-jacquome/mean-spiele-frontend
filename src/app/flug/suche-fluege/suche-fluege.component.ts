@@ -16,11 +16,11 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Suchkriterien } from '../shared/flug.service';
+import { Suchkriterien } from '../shared/spiel.service';
 import { Title } from '@angular/platform-browser';
 
 /**
- * Komponente f&uuml;r das Tag <code>&lt;hs-suche-fluege&gt;</code>, die aus
+ * Komponente f&uuml;r das Tag <code>&lt;hs-suche-spiele&gt;</code>, die aus
  * den Kindkomponenten f&uuml;r diese Tags besteht:
  * <ul>
  *  <li> <code>hs-suchformular</code>
@@ -28,7 +28,7 @@ import { Title } from '@angular/platform-browser';
  * </ul>
  */
 @Component({
-    selector: 'hs-suche-fluege',
+    selector: 'hs-suche-spiele',
     template: `
         <hs-suchformular
             (suchkriterien)="setSuchkriterien($event)"
@@ -36,12 +36,12 @@ import { Title } from '@angular/platform-browser';
         <hs-suchergebnis [suchkriterien]="suchkriterien"></hs-suchergebnis>
     `,
 })
-export class SucheFluegeComponent implements OnInit {
+export class SucheSpieleComponent implements OnInit {
     suchkriterien!: Suchkriterien;
 
     // Wird von der JS-Engine aufgerufen
     constructor(private readonly titleService: Title) {
-        console.log('SucheFluegeComponent.constructor()');
+        console.log('SucheSpieleComponent.constructor()');
     }
 
     // Wird von Angular aufgerufen, wenn der DOM-Baum fertig ist,
@@ -62,7 +62,7 @@ export class SucheFluegeComponent implements OnInit {
      */
     setSuchkriterien($event: Suchkriterien) {
         console.log(
-            'SucheFluegeComponent.setSuchkriterien(): suchkriterien=',
+            'SucheSpieleComponent.setSuchkriterien(): suchkriterien=',
             $event,
         );
         this.suchkriterien = $event;

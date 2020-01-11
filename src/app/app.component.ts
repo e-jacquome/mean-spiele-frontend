@@ -51,14 +51,14 @@ import { Component, VERSION } from '@angular/core';
     //       </hs-header>
     //       <hs-main>
     //           <router-outlet>
-    //               <hs-suche-fluege>
+    //               <hs-suche-spiele>
     //                   <hs-suchformular>
     //                       ...
     //                   </hs-suchformular>
     //                   <hs-suchergebnis>
     //                       ...
     //                   </hs-suchergebnis>
-    //               </hs-suche-fluege>
+    //               </hs-suche-spiele>
     //           <router-outlet>
     //       </hs-main>
     //   </hs-root>

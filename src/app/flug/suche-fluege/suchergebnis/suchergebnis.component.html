@@ -22,7 +22,7 @@
     <hs-waiting *ngIf="waiting; else suchergebnis"></hs-waiting>
 
     <ng-template #suchergebnis>
-        <div class="card" *ngIf="fluege.length; else showErrorMsg">
+        <div class="card" *ngIf="spiele.length; else showErrorMsg">
             <div class="card-header">
                 <fa-icon [icon]="faFolderOpen"></fa-icon>
                 <span class="ml-1 font-weight-bold">Gefundene B&uuml;cher</span>
@@ -56,7 +56,7 @@
                         <!-- Event-Binding: statt (click) auch on-click -->
                         <!-- ts als Komponente: https://stackoverflow.com/questions/34556277/angular2-table-rows-as-component -->
                         <tr
-                            *ngFor="let b of fluege; index as i"
+                            *ngFor="let b of spiele; index as i"
                             (click)="onSelect(b)"
                             [@easeOut]="'in'"
                         >
@@ -87,7 +87,7 @@
                                 </span>
                             </td>
                             <td>
-                                <!-- Pfad detailsFlug/:id, in routes.ts -->
+                                <!-- Pfad detailsSpiel/:id, in routes.ts -->
                                 <!-- modaler Dialog als Alternative: -->
                                 <!--
                                         https://getbootstrap.com/docs/4.0/components/modal
@@ -111,16 +111,16 @@
             <div class="card-footer">
                 <div>
                     <fa-icon [icon]="faInfoCircle"></fa-icon>
-                    <span class="ml-1" [ngPlural]="fluege.length">
+                    <span class="ml-1" [ngPlural]="spiele.length">
                         <!-- zu vergleichender Ausdruck -->
                         <ng-template ngPluralCase="=0">
-                            Es gibt kein Flug
+                            Es gibt kein Spiel
                         </ng-template>
                         <ng-template ngPluralCase="=1">
-                            Es gibt ein Flug
+                            Es gibt ein Spiel
                         </ng-template>
                         <ng-template ngPluralCase="other">
-                            Es gibt {{ fluege.length }} B&uuml;cher
+                            Es gibt {{ spiele.length }} B&uuml;cher
                         </ng-template>
                     </span>
                 </div>
@@ -139,7 +139,7 @@
         <!--
             Ausgabe des JSON-Datensatzes im Webbrowser statt console.log(...)
         -->
-        <!-- <pre>{{fluege | json}}</pre> -->
+        <!-- <pre>{{spiele | json}}</pre> -->
 
         <ng-template #showErrorMsg>
             <hs-error-message [text]="errorMsg"></hs-error-message>

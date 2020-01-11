@@ -22,7 +22,7 @@ import { SucheArtComponent } from './suche-art.component';
 import { SucheSchlagwoerterComponent } from './suche-schlagwoerter.component';
 import { SucheTitelComponent } from './suche-titel.component';
 import { SucheVerlagComponent } from './suche-verlag.component';
-import { Suchkriterien } from '../../shared/flug.service';
+import { Suchkriterien } from '../../shared/spiel.service';
 import { fadeIn } from '../../../shared';
 
 /**

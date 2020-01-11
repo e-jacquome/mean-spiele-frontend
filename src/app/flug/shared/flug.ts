@@ -25,20 +25,20 @@ export enum Verlag {
     HSKA_VERLAG = 'HSKA_VERLAG',
 }
 
-export enum FlugArt {
+export enum SpielArt {
     KINDLE = 'KINDLE',
     DRUCKAUSGABE = 'DRUCKAUSGABE',
 }
 
 /**
- * Gemeinsame Datenfelder unabh&auml;ngig, ob die Flugdaten von einem Server
+ * Gemeinsame Datenfelder unabh&auml;ngig, ob die Spieldaten von einem Server
  * (z.B. RESTful Web Service) oder von einem Formular kommen.
  */
-export interface FlugShared {
+export interface SpielShared {
     _id?: string;
     titel: string;
     verlag?: Verlag | '';
-    art: FlugArt;
+    art: SpielArt;
     preis: number;
     rabatt: number;
     datum?: string;
@@ -60,7 +60,7 @@ interface Link {
  *       String handhabbar sind.
  * </ul>
  */
-export interface FlugServer extends FlugShared {
+export interface SpielServer extends SpielShared {
     rating?: number;
     schlagwoerter?: Array<string>;
     _links?: {
@@ -79,7 +79,7 @@ export interface FlugServer extends FlugShared {
  *  <li> au&szlig;erdem Strings f&uuml;r Eingabefelder f&uuml;r Zahlen.
  * </ul>
  */
-export interface FlugForm extends FlugShared {
+export interface SpielForm extends SpielShared {
     rating: string;
     javascript?: boolean;
     typescript?: boolean;
@@ -89,7 +89,7 @@ export interface FlugForm extends FlugShared {
  * Model als Plain-Old-JavaScript-Object (POJO) fuer die Daten *UND*
  * Functions fuer Abfragen und Aenderungen.
  */
-export class Flug {
+export class Spiel {
     private static readonly SPACE = 2;
 
     /* eslint-disable no-invalid-this */
@@ -110,7 +110,7 @@ export class Flug {
         public _id: string | undefined,
         public titel: string,
         public rating: number | undefined,
-        public art: FlugArt,
+        public art: SpielArt,
         public verlag: Verlag | undefined | '',
         datum: string | undefined,
         public preis: number,
@@ -123,18 +123,18 @@ export class Flug {
         // TODO Parsing, ob der Datum-String valide ist
         this.datum = datum === undefined ? new Date() : new Date(datum);
         this.schlagwoerter = schlagwoerter === undefined ? [] : schlagwoerter;
-        console.log('Flug(): this=', this);
+        console.log('Spiel(): this=', this);
     }
 
     /**
-     * Ein Flug-Objekt mit JSON-Daten erzeugen, die von einem RESTful Web
+     * Ein Spiel-Objekt mit JSON-Daten erzeugen, die von einem RESTful Web
      * Service kommen.
-     * @param flug JSON-Objekt mit Daten vom RESTful Web Server
-     * @return Das initialisierte Flug-Objekt
+     * @param spiel JSON-Objekt mit Daten vom RESTful Web Server
+     * @return Das initialisierte Spiel-Objekt
      */
-    static fromServer(flugServer: FlugServer, etag?: string) {
+    static fromServer(spielServer: SpielServer, etag?: string) {
         let selfLink: string | undefined;
-        const { _links } = flugServer;
+        const { _links } = spielServer;
         if (_links !== undefined) {
             const { self } = _links;
             selfLink = self.href;
@@ -152,57 +152,57 @@ export class Flug {
             version = Number.parseInt(versionStr, 10);
         }
 
-        const flug = new Flug(
+        const spiel = new Spiel(
             id,
-            flugServer.titel,
-            flugServer.rating,
-            flugServer.art,
-            flugServer.verlag,
-            flugServer.datum,
-            flugServer.preis,
-            flugServer.rabatt,
-            flugServer.lieferbar,
-            flugServer.schlagwoerter,
-            flugServer.isbn,
+            spielServer.titel,
+            spielServer.rating,
+            spielServer.art,
+            spielServer.verlag,
+            spielServer.datum,
+            spielServer.preis,
+            spielServer.rabatt,
+            spielServer.lieferbar,
+            spielServer.schlagwoerter,
+            spielServer.isbn,
             version,
         );
-        console.log('Flug.fromServer(): flug=', flug);
-        return flug;
+        console.log('Spiel.fromServer(): spiel=', spiel);
+        return spiel;
     }
 
     /**
-     * Ein Flug-Objekt mit JSON-Daten erzeugen, die von einem Formular kommen.
-     * @param flug JSON-Objekt mit Daten vom Formular
-     * @return Das initialisierte Flug-Objekt
+     * Ein Spiel-Objekt mit JSON-Daten erzeugen, die von einem Formular kommen.
+     * @param spiel JSON-Objekt mit Daten vom Formular
+     * @return Das initialisierte Spiel-Objekt
      */
-    static fromForm(flugForm: FlugForm) {
-        console.log('Flug.fromForm(): flugForm=', flugForm);
+    static fromForm(spielForm: SpielForm) {
+        console.log('Spiel.fromForm(): spielForm=', spielForm);
         const schlagwoerter: Array<string> = [];
-        if (flugForm.javascript === true) {
+        if (spielForm.javascript === true) {
             schlagwoerter.push('JAVASCRIPT');
         }
-        if (flugForm.typescript === true) {
+        if (spielForm.typescript === true) {
             schlagwoerter.push('TYPESCRIPT');
         }
 
         const rabatt =
-            flugForm.rabatt === undefined ? 0 : flugForm.rabatt / 100; // eslint-disable-line @typescript-eslint/no-magic-numbers
-        const flug = new Flug(
-            flugForm._id,
-            flugForm.titel,
-            Number(flugForm.rating),
-            flugForm.art,
-            flugForm.verlag,
-            flugForm.datum,
-            flugForm.preis,
+            spielForm.rabatt === undefined ? 0 : spielForm.rabatt / 100; // eslint-disable-line @typescript-eslint/no-magic-numbers
+        const spiel = new Spiel(
+            spielForm._id,
+            spielForm.titel,
+            Number(spielForm.rating),
+            spielForm.art,
+            spielForm.verlag,
+            spielForm.datum,
+            spielForm.preis,
             rabatt,
-            flugForm.lieferbar,
+            spielForm.lieferbar,
             schlagwoerter,
-            flugForm.isbn,
-            flugForm.version,
+            spielForm.isbn,
+            spielForm.version,
         );
-        console.log('Flug.fromForm(): flug=', flug);
-        return flug;
+        console.log('Spiel.fromForm(): spiel=', spiel);
+        return spiel;
     }
 
     // Property in TypeScript wie in C#
@@ -218,10 +218,10 @@ export class Flug {
     }
 
     /**
-     * Abfrage, ob im Flugtitel der angegebene Teilstring enthalten ist. Dabei
+     * Abfrage, ob im Spieltitel der angegebene Teilstring enthalten ist. Dabei
      * wird nicht auf Gross-/Kleinschreibung geachtet.
      * @param titel Zu &uuml;berpr&uuml;fender Teilstring
-     * @return true, falls der Teilstring im Flugtitel enthalten ist. Sonst
+     * @return true, falls der Teilstring im Spieltitel enthalten ist. Sonst
      *         false.
      */
     containsTitel(titel: string) {
@@ -231,7 +231,7 @@ export class Flug {
     }
 
     /**
-     * Die Bewertung ("rating") des Fluges um 1 erh&ouml;hen
+     * Die Bewertung ("rating") des Spieles um 1 erh&ouml;hen
      */
     rateUp() {
         if (this.rating !== undefined && this.rating < MAX_RATING) {
@@ -240,7 +240,7 @@ export class Flug {
     }
 
     /**
-     * Die Bewertung ("rating") des Fluges um 1 erniedrigen
+     * Die Bewertung ("rating") des Spieles um 1 erniedrigen
      */
     rateDown() {
         if (this.rating !== undefined && this.rating > MIN_RATING) {
@@ -249,19 +249,19 @@ export class Flug {
     }
 
     /**
-     * Abfrage, ob das Flug dem angegebenen Verlag zugeordnet ist.
+     * Abfrage, ob das Spiel dem angegebenen Verlag zugeordnet ist.
      * @param verlag der Name des Verlags
-     * @return true, falls das Flug dem Verlag zugeordnet ist. Sonst false.
+     * @return true, falls das Spiel dem Verlag zugeordnet ist. Sonst false.
      */
     hasVerlag(verlag: string) {
         return this.verlag === verlag;
     }
 
     /**
-     * Aktualisierung der Stammdaten des Flug-Objekts.
-     * @param titel Der neue Flugtitel
+     * Aktualisierung der Stammdaten des Spiel-Objekts.
+     * @param titel Der neue Spieltitel
      * @param rating Die neue Bewertung
-     * @param art Die neue Flugart (DRUCKAUSGABE oder KINDLE)
+     * @param art Die neue Spielart (DRUCKAUSGABE oder KINDLE)
      * @param verlag Der neue Verlag
      * @param preis Der neue Preis
      * @param rabatt Der neue Rabatt
@@ -269,7 +269,7 @@ export class Flug {
     // eslint-disable-next-line max-params
     updateStammdaten(
         titel: string,
-        art: FlugArt,
+        art: SpielArt,
         verlag: Verlag | undefined | '',
         rating: number | undefined,
         datum: Date | undefined,
@@ -292,7 +292,7 @@ export class Flug {
     }
 
     /**
-     * Abfrage, ob es zum Flug auch Schlagw&ouml;rter gibt.
+     * Abfrage, ob es zum Spiel auch Schlagw&ouml;rter gibt.
      * @return true, falls es mindestens ein Schlagwort gibt. Sonst false.
      */
     hasSchlagwoerter() {
@@ -303,7 +303,7 @@ export class Flug {
     }
 
     /**
-     * Abfrage, ob es zum Flug das angegebene Schlagwort gibt.
+     * Abfrage, ob es zum Spiel das angegebene Schlagwort gibt.
      * @param schlagwort das zu &uuml;berpr&uuml;fende Schlagwort
      * @return true, falls es das Schlagwort gibt. Sonst false.
      */
@@ -315,7 +315,7 @@ export class Flug {
     }
 
     /**
-     * Aktualisierung der Schlagw&ouml;rter des Flug-Objekts.
+     * Aktualisierung der Schlagw&ouml;rter des Spiel-Objekts.
      * @param javascript ist das Schlagwort JAVASCRIPT gesetzt
      * @param typescript ist das Schlagwort TYPESCRIPT gesetzt
      */
@@ -330,11 +330,11 @@ export class Flug {
     }
 
     /**
-     * Konvertierung des Flugobjektes in ein JSON-Objekt f&uuml;r den RESTful
+     * Konvertierung des Spielobjektes in ein JSON-Objekt f&uuml;r den RESTful
      * Web Service.
      * @return Das JSON-Objekt f&uuml;r den RESTful Web Service
      */
-    toJSON(): FlugServer {
+    toJSON(): SpielServer {
         const datum =
             this.datum === undefined ? undefined : this.datum.toISOString();
         console.log(`toJson(): datum=${datum}`);
@@ -354,7 +354,7 @@ export class Flug {
     }
 
     toString() {
-        return JSON.stringify(this, null, Flug.SPACE);
+        return JSON.stringify(this, null, Spiel.SPACE);
     }
 
     private resetSchlagwoerter() {

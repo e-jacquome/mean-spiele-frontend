@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Verlag } from '../../shared/flug';
+import { Verlag } from '../../shared/spiel';
 
 /**
  * Komponente f&uuml;r das Tag <code>hs-details-verlag</code>

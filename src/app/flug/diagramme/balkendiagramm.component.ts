@@ -22,7 +22,7 @@ import {
     OnDestroy,
     ViewChild,
 } from '@angular/core';
-import { FlugService } from '../shared/flug.service';
+import { SpielService } from '../shared/spiel.service';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
@@ -43,7 +43,7 @@ export class BalkendiagrammComponent implements AfterViewInit, OnDestroy {
     private barChartSubscription!: Subscription;
 
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly titleService: Title,
     ) {
         console.log('BalkendiagrammComponent.constructor()');
@@ -56,7 +56,7 @@ export class BalkendiagrammComponent implements AfterViewInit, OnDestroy {
      * https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html.
      */
     ngAfterViewInit() {
-        this.barChartSubscription = this.flugService.createBarChart(
+        this.barChartSubscription = this.spielService.createBarChart(
             this.chartCanvas.nativeElement,
         );
 

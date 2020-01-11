@@ -21,13 +21,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { UpdateFlugComponent } from './update-flug.component';
+import { UpdateSpielComponent } from './update-spiel.component';
 import { UpdateSchlagwoerterModule } from './schlagwoerter/update-schlagwoerter.module';
 import { UpdateStammdatenModule } from './stammdaten/update-stammdaten.module';
 
 @NgModule({
-    declarations: [UpdateFlugComponent],
-    exports: [UpdateFlugComponent],
+    declarations: [UpdateSpielComponent],
+    exports: [UpdateSpielComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -38,4 +38,4 @@ import { UpdateStammdatenModule } from './stammdaten/update-stammdaten.module';
     ],
     providers: [Title],
 })
-export class UpdateFlugModule {}
+export class UpdateSpielModule {}

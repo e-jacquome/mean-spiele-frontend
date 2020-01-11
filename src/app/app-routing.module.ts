@@ -33,12 +33,12 @@ const routes: Routes = [
         component: HomeComponent,
     },
     {
-        path: 'fluege',
+        path: 'spiele',
         // Lazy Loading durch dynamische Imports
         // loadChildren statt component wie bei 'home'
         loadChildren: () =>
-            import('./flug/flug-routing.module').then(
-                mod => mod.FlugRoutingModule,
+            import('./spiel/spiel-routing.module').then(
+                mod => mod.SpielRoutingModule,
             ),
     },
 ];

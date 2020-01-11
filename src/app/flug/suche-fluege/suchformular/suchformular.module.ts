@@ -30,7 +30,7 @@ import { SuchformularComponent } from './suchformular.component';
 // Ein Modul enthaelt logisch zusammengehoerige Funktionalitaet.
 // Exportierte Komponenten koennen bei einem importierenden Modul in dessen
 // Komponenten innerhalb deren Templates (= HTML-Fragmente) genutzt werden.
-// SucheFluegeModule ist ein "FeatureModule", das Features fuer Fluege bereitstellt
+// SucheSpieleModule ist ein "FeatureModule", das Features fuer Spiele bereitstellt
 @NgModule({
     declarations: [SuchformularComponent],
     exports: [SuchformularComponent],

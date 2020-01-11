@@ -18,7 +18,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { FlugArt } from '../../shared/flug';
+import { SpielArt } from '../../shared/spiel';
 
 /**
  * Komponente f&uuml;r das Tag <code>hs-update-art</code>
@@ -32,7 +32,7 @@ export class UpdateArtComponent implements OnInit {
     @Input()
     readonly form!: FormGroup;
     @Input()
-    readonly currentValue!: FlugArt;
+    readonly currentValue!: SpielArt;
 
     art!: FormControl;
 

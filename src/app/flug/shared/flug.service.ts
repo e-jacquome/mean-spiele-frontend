@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { BASE_URI, FLUEGE_PATH_REST } from '../../shared';
-import { Flug, FlugArt, FlugServer, Verlag } from './flug';
+import { BASE_URI, SPIELE_PATH_REST } from '../../shared';
+import { Spiel, SpielArt, SpielServer, Verlag } from './spiel';
 // Bereitgestellt durch HttpClientModule
 // HttpClientModule enthaelt nur Services, keine Komponenten
 import {
@@ -52,18 +52,18 @@ import { Subject } from 'rxjs';
  * hinzugefuegt und ist in allen Klassen der Webanwendung verfuegbar.
  */
 @Injectable({ providedIn: 'root' })
-export class FlugService {
+export class SpielService {
     // Observables = Event-Streaming mit Promises
     // Subject statt Basisklasse Observable:
     // in find() und findById() wird next() aufgerufen
     /* eslint-disable no-underscore-dangle */
-    readonly fluegeSubject = new Subject<Array<Flug>>();
-    readonly flugSubject = new Subject<Flug>();
+    readonly spieleSubject = new Subject<Array<Spiel>>();
+    readonly spielSubject = new Subject<Spiel>();
     readonly errorSubject = new Subject<string | number>();
 
-    private readonly baseUriFluege!: string;
+    private readonly baseUriSpiele!: string;
 
-    private _flug!: Flug;
+    private _spiel!: Spiel;
 
     /**
      * @param diagrammService injizierter DiagrammService
@@ -74,31 +74,31 @@ export class FlugService {
         private readonly diagrammService: DiagrammService,
         private readonly httpClient: HttpClient,
     ) {
-        this.baseUriFluege = `${BASE_URI}/${FLUEGE_PATH_REST}`;
+        this.baseUriSpiele = `${BASE_URI}/${SPIELE_PATH_REST}`;
         console.log(
-            `FlugService.constructor(): baseUriFlug=${this.baseUriFluege}`,
+            `SpielService.constructor(): baseUriSpiel=${this.baseUriSpiele}`,
         );
     }
 
     /**
-     * Ein Flug-Objekt puffern.
-     * @param flug Das Flug-Objekt, das gepuffert wird.
+     * Ein Spiel-Objekt puffern.
+     * @param spiel Das Spiel-Objekt, das gepuffert wird.
      * @return void
      */
-    set flug(flug: Flug) {
-        console.log('FlugService.set flug()', flug);
-        this._flug = flug;
+    set spiel(spiel: Spiel) {
+        console.log('SpielService.set spiel()', spiel);
+        this._spiel = spiel;
     }
 
     /**
-     * Fluege suchen
+     * Spiele suchen
      * @param suchkriterien Die Suchkriterien
      */
     find(suchkriterien: Suchkriterien) {
-        console.log('FlugService.find(): suchkriterien=', suchkriterien);
+        console.log('SpielService.find(): suchkriterien=', suchkriterien);
         const params = this.suchkriterienToHttpParams(suchkriterien);
-        const uri = this.baseUriFluege;
-        console.log(`FlugService.find(): uri=${uri}`);
+        const uri = this.baseUriSpiele;
+        console.log(`SpielService.find(): uri=${uri}`);
 
         const errorFn = (err: HttpErrorResponse) => {
             if (err.error instanceof ProgressEvent) {
@@ -109,7 +109,7 @@ export class FlugService {
 
             const { status } = err;
             console.log(
-                `FlugService.find(): errorFn(): status=${status}, ` +
+                `SpielService.find(): errorFn(): status=${status}, ` +
                     'Response-Body=',
                 err.error,
             );
@@ -123,15 +123,15 @@ export class FlugService {
         // http://stackoverflow.com/questions/34533197/what-is-the-difference-between-rx-observable-subscribe-and-foreach
         // https://xgrommx.github.io/rx-book/content/observable/observable_instance_methods/subscribe.html
         return this.httpClient
-            .get<Array<FlugServer>>(uri, { params })
+            .get<Array<SpielServer>>(uri, { params })
             .pipe(
                 // Pipeable operators
                 // http://reactivex.io/documentation/operators.html
                 map(jsonArray =>
-                    jsonArray.map(jsonObjekt => Flug.fromServer(jsonObjekt)),
+                    jsonArray.map(jsonObjekt => Spiel.fromServer(jsonObjekt)),
                 ),
             )
-            .subscribe(fluege => this.fluegeSubject.next(fluege), errorFn);
+            .subscribe(spiele => this.spieleSubject.next(spiele), errorFn);
 
         // Same-Origin-Policy verhindert Ajax-Datenabfragen an einen Server in
         // einer anderen Domain. JSONP (= JSON mit Padding) ermoeglicht die
@@ -140,37 +140,37 @@ export class FlugService {
     }
 
     /**
-     * Ein Flug anhand der ID suchen
-     * @param id Die ID des gesuchten Flugs
+     * Ein Spiel anhand der ID suchen
+     * @param id Die ID des gesuchten Spiels
      */
     // eslint-disable-next-line max-lines-per-function
     findById(id: string | undefined) {
-        console.log(`FlugService.findById(): id=${id}`);
+        console.log(`SpielService.findById(): id=${id}`);
 
-        // Gibt es ein gepuffertes Flug mit der gesuchten ID und Versionsnr.?
+        // Gibt es ein gepuffertes Spiel mit der gesuchten ID und Versionsnr.?
         if (
-            this._flug !== undefined &&
-            this._flug._id === id &&
-            this._flug.version !== undefined
+            this._spiel !== undefined &&
+            this._spiel._id === id &&
+            this._spiel.version !== undefined
         ) {
             console.log(
-                `FlugService.findById(): Flug gepuffert, version=${this._flug.version}`,
+                `SpielService.findById(): Spiel gepuffert, version=${this._spiel.version}`,
             );
-            this.flugSubject.next(this._flug);
+            this.spielSubject.next(this._spiel);
             return;
         }
         if (id === undefined) {
-            console.log('FlugService.findById(): Keine Id');
+            console.log('SpielService.findById(): Keine Id');
             return;
         }
 
         // Ggf wegen fehlender Versionsnummer (im ETag) nachladen
-        const uri = `${this.baseUriFluege}/${id}`;
+        const uri = `${this.baseUriSpiele}/${id}`;
 
         const errorFn = (err: HttpErrorResponse) => {
             if (err.error instanceof ProgressEvent) {
                 console.error(
-                    'FlugService.findById(): errorFn(): Client- oder Netzwerkfehler',
+                    'SpielService.findById(): errorFn(): Client- oder Netzwerkfehler',
                     err.error,
                 );
                 this.errorSubject.next(-1);
@@ -179,22 +179,22 @@ export class FlugService {
 
             const { status } = err;
             console.log(
-                `FlugService.findById(): errorFn(): status=${status}` +
+                `SpielService.findById(): errorFn(): status=${status}` +
                     `Response-Body=${err.error}`,
             );
             this.errorSubject.next(status);
         };
 
-        console.log('FlugService.findById(): GET-Request');
+        console.log('SpielService.findById(): GET-Request');
 
-        let body: FlugServer | null = null;
+        let body: SpielServer | null = null;
         let etag: string | null = null;
         return this.httpClient
-            .get<FlugServer>(uri, { observe: 'response' })
+            .get<SpielServer>(uri, { observe: 'response' })
             .pipe(
                 filter(response => {
                     console.debug(
-                        'FlugService.findById(): filter(): response=',
+                        'SpielService.findById(): filter(): response=',
                         response,
                     );
                     ({ body } = response);
@@ -207,32 +207,32 @@ export class FlugService {
                 }),
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 map(_ => {
-                    this._flug = Flug.fromServer(body, etag);
-                    return this._flug;
+                    this._spiel = Spiel.fromServer(body, etag);
+                    return this._spiel;
                 }),
             )
-            .subscribe(flug => this.flugSubject.next(flug), errorFn);
+            .subscribe(spiel => this.spielSubject.next(spiel), errorFn);
     }
 
     /**
-     * Ein neues Flug anlegen
-     * @param neuesFlug Das JSON-Objekt mit dem neuen Flug
+     * Ein neues Spiel anlegen
+     * @param neuesSpiel Das JSON-Objekt mit dem neuen Spiel
      * @param successFn Die Callback-Function fuer den Erfolgsfall
      * @param errorFn Die Callback-Function fuer den Fehlerfall
      */
     save(
-        flug: Flug,
+        spiel: Spiel,
         successFn: (location: string | undefined) => void,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         errorFn: (status: number, errors: { [s: string]: any }) => void,
     ) {
-        console.log('FlugService.save(): flug=', flug);
-        flug.datum = new Date();
+        console.log('SpielService.save(): spiel=', spiel);
+        spiel.datum = new Date();
 
         const errorFnPost = (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
                 console.error(
-                    'FlugService.save(): errorFnPost(): Client- oder Netzwerkfehler',
+                    'SpielService.save(): errorFnPost(): Client- oder Netzwerkfehler',
                     err.error.message,
                 );
             } else if (errorFn === undefined) {
@@ -248,7 +248,7 @@ export class FlugService {
             Accept: 'text/plain',
         });
         return this.httpClient
-            .post(this.baseUriFluege, flug.toJSON(), {
+            .post(this.baseUriSpiele, spiel.toJSON(), {
                 headers,
                 observe: 'response',
                 responseType: 'text',
@@ -256,7 +256,7 @@ export class FlugService {
             .pipe(
                 map(response => {
                     console.debug(
-                        'FlugService.save(): map(): response',
+                        'SpielService.save(): map(): response',
                         response,
                     );
                     const headersResponse = response.headers;
@@ -271,13 +271,13 @@ export class FlugService {
     }
 
     /**
-     * Ein vorhandenes Flug aktualisieren
-     * @param flug Das JSON-Objekt mit den aktualisierten Flugdaten
+     * Ein vorhandenes Spiel aktualisieren
+     * @param spiel Das JSON-Objekt mit den aktualisierten Spieldaten
      * @param successFn Die Callback-Function fuer den Erfolgsfall
      * @param errorFn Die Callback-Function fuer den Fehlerfall
      */
     update(
-        flug: Flug,
+        spiel: Spiel,
         successFn: () => void,
         errorFn: (
             status: number,
@@ -285,17 +285,17 @@ export class FlugService {
             errors: { [s: string]: any } | undefined,
         ) => void,
     ) {
-        console.log('FlugService.update(): flug=', flug);
+        console.log('SpielService.update(): spiel=', spiel);
 
-        const { version } = flug;
+        const { version } = spiel;
         if (version === undefined) {
-            console.error(`Keine Versionsnummer fuer das Flug ${flug._id}`);
+            console.error(`Keine Versionsnummer fuer das Spiel ${spiel._id}`);
             return;
         }
         const successFnPut = () => {
             successFn();
             // Wenn Update erfolgreich war, dann wurde serverseitig die Versionsnr erhoeht
-            flug.version++;
+            spiel.version++;
         };
         const errorFnPut = (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -310,7 +310,7 @@ export class FlugService {
             }
         };
 
-        const uri = `${this.baseUriFluege}/${flug._id}`;
+        const uri = `${this.baseUriSpiele}/${spiel._id}`;
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             Accept: 'text/plain',
@@ -318,23 +318,23 @@ export class FlugService {
         });
         console.log('headers=', headers);
         return this.httpClient
-            .put(uri, flug, { headers })
+            .put(uri, spiel, { headers })
             .subscribe(successFnPut, errorFnPut);
     }
 
     /**
-     * Ein Flug l&ouml;schen
-     * @param flug Das JSON-Objekt mit dem zu loeschenden Flug
+     * Ein Spiel l&ouml;schen
+     * @param spiel Das JSON-Objekt mit dem zu loeschenden Spiel
      * @param successFn Die Callback-Function fuer den Erfolgsfall
      * @param errorFn Die Callback-Function fuer den Fehlerfall
      */
     remove(
-        flug: Flug,
+        spiel: Spiel,
         successFn: (() => void) | undefined,
         errorFn: (status: number) => void,
     ) {
-        console.log('FlugService.remove(): flug=', flug);
-        const uri = `${this.baseUriFluege}/${flug._id}`;
+        console.log('SpielService.remove(): spiel=', spiel);
+        const uri = `${this.baseUriSpiele}/${spiel._id}`;
 
         const errorFnDelete = (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -380,24 +380,24 @@ export class FlugService {
      * @param chartElement Das HTML-Element zum Tag <code>canvas</code>
      */
     createBarChart(chartElement: HTMLCanvasElement) {
-        console.log('FlugService.createBarChart()');
-        const uri = this.baseUriFluege;
+        console.log('SpielService.createBarChart()');
+        const uri = this.baseUriSpiele;
         return this.httpClient
-            .get<Array<FlugServer>>(uri)
+            .get<Array<SpielServer>>(uri)
             .pipe(
                 // ID aus Self-Link
-                map(fluege => fluege.map(flug => this.setFlugId(flug))),
-                map(fluege => {
-                    const fluegeGueltig = fluege.filter(
+                map(spiele => spiele.map(spiel => this.setSpielId(spiel))),
+                map(spiele => {
+                    const spieleGueltig = spiele.filter(
                         b => b._id !== null && b.rating !== undefined,
                     );
-                    const labels = fluegeGueltig.map(b => b._id);
+                    const labels = spieleGueltig.map(b => b._id);
                     console.log(
-                        'FlugService.createBarChart(): labels: ',
+                        'SpielService.createBarChart(): labels: ',
                         labels,
                     );
 
-                    const data = fluegeGueltig.map(b => b.rating);
+                    const data = spieleGueltig.map(b => b.rating);
                     const datasets = [{ label: 'Bewertung', data }];
 
                     return {
@@ -417,25 +417,25 @@ export class FlugService {
      * @param chartElement Das HTML-Element zum Tag <code>canvas</code>
      */
     createLinearChart(chartElement: HTMLCanvasElement) {
-        console.log('FlugService.createLinearChart()');
-        const uri = this.baseUriFluege;
+        console.log('SpielService.createLinearChart()');
+        const uri = this.baseUriSpiele;
 
         return this.httpClient
-            .get<Array<FlugServer>>(uri)
+            .get<Array<SpielServer>>(uri)
             .pipe(
                 // ID aus Self-Link
-                map(fluege => fluege.map(b => this.setFlugId(b))),
-                map(fluege => {
-                    const fluegeGueltig = fluege.filter(
+                map(spiele => spiele.map(b => this.setSpielId(b))),
+                map(spiele => {
+                    const spieleGueltig = spiele.filter(
                         b => b._id !== null && b.rating !== undefined,
                     );
-                    const labels = fluegeGueltig.map(b => b._id);
+                    const labels = spieleGueltig.map(b => b._id);
                     console.log(
-                        'FlugService.createLinearChart(): labels: ',
+                        'SpielService.createLinearChart(): labels: ',
                         labels,
                     );
 
-                    const data = fluegeGueltig.map(b => b.rating);
+                    const data = spieleGueltig.map(b => b.rating);
                     const datasets = [{ label: 'Bewertung', data }];
 
                     return {
@@ -455,24 +455,24 @@ export class FlugService {
      * @param chartElement Das HTML-Element zum Tag <code>canvas</code>
      */
     createPieChart(chartElement: HTMLCanvasElement) {
-        console.log('FlugService.createPieChart()');
-        const uri = this.baseUriFluege;
+        console.log('SpielService.createPieChart()');
+        const uri = this.baseUriSpiele;
 
         return this.httpClient
-            .get<Array<FlugServer>>(uri)
+            .get<Array<SpielServer>>(uri)
             .pipe(
                 // ID aus Self-Link
-                map(fluege => fluege.map(flug => this.setFlugId(flug))),
-                map(fluege => {
-                    const fluegeGueltig = fluege.filter(
+                map(spiele => spiele.map(spiel => this.setSpielId(spiel))),
+                map(spiele => {
+                    const spieleGueltig = spiele.filter(
                         b => b._id !== null && b.rating !== undefined,
                     );
-                    const labels = fluegeGueltig.map(b => b._id);
+                    const labels = spieleGueltig.map(b => b._id);
                     console.log(
-                        'FlugService.createPieChart(): labels: ',
+                        'SpielService.createPieChart(): labels: ',
                         labels,
                     );
-                    const ratings = fluegeGueltig.map(b => b.rating);
+                    const ratings = spieleGueltig.map(b => b.rating);
 
                     const anzahl = ratings.length;
                     const backgroundColor = new Array<string>(anzahl);
@@ -516,7 +516,7 @@ export class FlugService {
         suchkriterien: Suchkriterien,
     ): HttpParams {
         console.log(
-            'FlugService.suchkriterienToHttpParams(): suchkriterien=',
+            'SpielService.suchkriterienToHttpParams(): suchkriterien=',
             suchkriterien,
         );
         let httpParams = new HttpParams();
@@ -542,25 +542,25 @@ export class FlugService {
         return httpParams;
     }
 
-    private setFlugId(flug: FlugServer) {
-        const { _links } = flug;
+    private setSpielId(spiel: SpielServer) {
+        const { _links } = spiel;
         if (_links !== undefined) {
-            const selfLink = flug._links.self.href;
+            const selfLink = spiel._links.self.href;
             if (typeof selfLink === 'string') {
                 const lastSlash = selfLink.lastIndexOf('/');
-                flug._id = selfLink.substring(lastSlash + 1);
+                spiel._id = selfLink.substring(lastSlash + 1);
             }
         }
-        if (flug._id === undefined) {
-            flug._id = 'undefined';
+        if (spiel._id === undefined) {
+            spiel._id = 'undefined';
         }
-        return flug;
+        return spiel;
     }
 }
 
 export interface Suchkriterien {
     titel: string;
     verlag: Verlag | '';
-    art: FlugArt | '';
+    art: SpielArt | '';
     schlagwoerter: { javascript: boolean; typescript: boolean };
 }

@@ -22,7 +22,7 @@ import {
     OnDestroy,
     ViewChild,
 } from '@angular/core';
-import { FlugService } from '../shared/flug.service';
+import { SpielService } from '../shared/spiel.service';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
@@ -42,7 +42,7 @@ export class LiniendiagrammComponent implements AfterViewInit, OnDestroy {
     private lineChartSubscription!: Subscription;
 
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly titleService: Title,
     ) {
         console.log('LiniendiagrammComponent.constructor()');
@@ -54,7 +54,7 @@ export class LiniendiagrammComponent implements AfterViewInit, OnDestroy {
      * zugegriffen werden.
      */
     ngAfterViewInit() {
-        this.lineChartSubscription = this.flugService.createLinearChart(
+        this.lineChartSubscription = this.spielService.createLinearChart(
             this.chartCanvas.nativeElement,
         );
         this.titleService.setTitle('Liniendiagramm');

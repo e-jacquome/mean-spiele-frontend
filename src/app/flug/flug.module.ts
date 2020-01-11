@@ -16,25 +16,25 @@
  */
 
 import { BalkendiagrammModule } from './diagramme/balkendiagramm.module';
-import { FlugRoutingModule } from './flug-routing.module';
-import { CreateFlugModule } from './create-flug/create-flug.module';
-import { DetailsFlugModule } from './details-flug/details-flug.module';
+import { SpielRoutingModule } from './spiel-routing.module';
+import { CreateSpielModule } from './create-spiel/create-spiel.module';
+import { DetailsSpielModule } from './details-spiel/details-spiel.module';
 import { LiniendiagrammModule } from './diagramme/liniendiagramm.module';
 import { NgModule } from '@angular/core';
-import { SucheFluegeModule } from './suche-fluege/suche-fluege.module';
+import { SucheSpieleModule } from './suche-spiele/suche-spiele.module';
 import { TortendiagrammModule } from './diagramme/tortendiagramm.module';
-import { UpdateFlugModule } from './update-flug/update-flug.module';
+import { UpdateSpielModule } from './update-spiel/update-spiel.module';
 
 @NgModule({
     imports: [
         BalkendiagrammModule,
-        CreateFlugModule,
-        DetailsFlugModule,
+        CreateSpielModule,
+        DetailsSpielModule,
         LiniendiagrammModule,
-        SucheFluegeModule,
+        SucheSpieleModule,
         TortendiagrammModule,
-        UpdateFlugModule,
-        FlugRoutingModule,
+        UpdateSpielModule,
+        SpielRoutingModule,
     ],
 })
-export class FlugModule {}
+export class SpielModule {}

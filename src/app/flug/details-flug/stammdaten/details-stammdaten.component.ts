@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Flug } from '../../shared/flug';
+import { Spiel } from '../../shared/spiel';
 
 /**
  * Komponente f&uuml;r das Tag <code>hs-stammdaten</code>
@@ -26,12 +26,12 @@ import { Flug } from '../../shared/flug';
     templateUrl: './details-stammdaten.component.html',
 })
 export class DetailsStammdatenComponent implements OnInit {
-    // Property Binding: <hs-details-stammdaten [flug]="...">
+    // Property Binding: <hs-details-stammdaten [spiel]="...">
     // Decorator fuer ein Attribut. Siehe InputMetadata
     @Input()
-    flug!: Flug;
+    spiel!: Spiel;
 
     ngOnInit() {
-        console.log('DetailsStammdatenComponent.flug=', this.flug);
+        console.log('DetailsStammdatenComponent.spiel=', this.spiel);
     }
 }

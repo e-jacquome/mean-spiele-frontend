@@ -18,27 +18,27 @@
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from '../auth/admin.guard';
 import { BalkendiagrammComponent } from './diagramme/balkendiagramm.component';
-import { CreateFlugComponent } from './create-flug/create-flug.component';
-import { CreateFlugGuard } from './create-flug/create-flug.guard';
-import { DetailsFlugComponent } from './details-flug/details-flug.component';
+import { CreateSpielComponent } from './create-spiel/create-spiel.component';
+import { CreateSpielGuard } from './create-spiel/create-spiel.guard';
+import { DetailsSpielComponent } from './details-spiel/details-spiel.component';
 import { LiniendiagrammComponent } from './diagramme/liniendiagramm.component';
 import { NgModule } from '@angular/core';
-import { SucheFluegeComponent } from './suche-fluege/suche-fluege.component';
+import { SucheSpieleComponent } from './suche-spiele/suche-spiele.component';
 import { TortendiagrammComponent } from './diagramme/tortendiagramm.component';
-import { UpdateFlugComponent } from './update-flug/update-flug.component';
+import { UpdateSpielComponent } from './update-spiel/update-spiel.component';
 
-// Route-Definitionen fuer das Feature-Modul "flug":
+// Route-Definitionen fuer das Feature-Modul "spiel":
 // Zuordnung von Pfaden und Komponenten mit HTML-Templates
 const routes: Routes = [
     {
         path: 'suche',
-        component: SucheFluegeComponent,
+        component: SucheSpieleComponent,
     },
     {
         path: 'create',
-        component: CreateFlugComponent,
+        component: CreateSpielComponent,
         canActivate: [AdminGuard],
-        canDeactivate: [CreateFlugGuard],
+        canDeactivate: [CreateSpielGuard],
     },
     {
         path: 'balkendiagramm',
@@ -59,11 +59,11 @@ const routes: Routes = [
     // id als Pfad-Parameter
     {
         path: ':id',
-        component: DetailsFlugComponent,
+        component: DetailsSpielComponent,
     },
     {
         path: ':id/update',
-        component: UpdateFlugComponent,
+        component: UpdateSpielComponent,
         canActivate: [AdminGuard],
     },
 ];
@@ -72,4 +72,4 @@ const routes: Routes = [
     exports: [RouterModule],
     imports: [RouterModule.forChild(routes)],
 })
-export class FlugRoutingModule {}
+export class SpielRoutingModule {}

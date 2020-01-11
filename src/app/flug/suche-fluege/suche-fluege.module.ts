@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SucheFluegeComponent } from './suche-fluege.component';
+import { SucheSpieleComponent } from './suche-spiele.component';
 import { SuchergebnisModule } from './suchergebnis/suchergebnis.module';
 import { SuchformularModule } from './suchformular/suchformular.module';
 import { Title } from '@angular/platform-browser';
@@ -24,11 +24,11 @@ import { Title } from '@angular/platform-browser';
 // Ein Modul enthaelt logisch zusammengehoerige Funktionalitaet.
 // Exportierte Komponenten koennen bei einem importierenden Modul in dessen
 // Komponenten innerhalb deren Templates (= HTML-Fragmente) genutzt werden.
-// SucheFluegeModule ist ein "FeatureModule", das Features fuer Fluege bereitstellt
+// SucheSpieleModule ist ein "FeatureModule", das Features fuer Spiele bereitstellt
 @NgModule({
-    declarations: [SucheFluegeComponent],
-    exports: [SucheFluegeComponent],
+    declarations: [SucheSpieleComponent],
+    exports: [SucheSpieleComponent],
     imports: [SuchergebnisModule, SuchformularModule],
     providers: [Title],
 })
-export class SucheFluegeModule {}
+export class SucheSpieleModule {}

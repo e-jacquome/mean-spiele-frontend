@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { DetailsBearbeitenModule } from './details-bearbeiten.module';
 import { DetailsBreadcrumbsModule } from './details-breadcrumbs.module';
-import { DetailsFlugComponent } from './details-flug.component';
+import { DetailsSpielComponent } from './details-spiel.component';
 import { DetailsSchlagwoerterModule } from './schlagwoerter/details-schlagwoerter.module';
 import { DetailsStammdatenModule } from './stammdaten/details-stammdaten.module';
 import { ErrorMessageModule } from '../../shared/error-message.module';
@@ -28,8 +28,8 @@ import { Title } from '@angular/platform-browser';
 import { WaitingModule } from '../../shared/waiting.module';
 
 @NgModule({
-    declarations: [DetailsFlugComponent],
-    exports: [DetailsFlugComponent],
+    declarations: [DetailsSpielComponent],
+    exports: [DetailsSpielComponent],
     providers: [Title],
     imports: [
         CommonModule,
@@ -42,4 +42,4 @@ import { WaitingModule } from '../../shared/waiting.module';
         DetailsStammdatenModule,
     ],
 })
-export class DetailsFlugModule {}
+export class DetailsSpielModule {}

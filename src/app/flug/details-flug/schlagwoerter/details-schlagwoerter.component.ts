@@ -25,7 +25,7 @@ import { Component, Input, OnInit } from '@angular/core';
     templateUrl: 'details-schlagwoerter.component.html',
 })
 export class DetailsSchlagwoerterComponent implements OnInit {
-    // <hs-schlagwoerter [values]="flug.schlagwoerter">
+    // <hs-schlagwoerter [values]="spiel.schlagwoerter">
     // Decorator fuer ein Attribut. Siehe InputMetadata
     @Input()
     readonly values!: Array<string>;

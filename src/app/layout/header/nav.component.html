@@ -22,7 +22,7 @@
 <ul class="navbar-nav mr-auto">
     <li class="nav-item active">
         <a
-            routerLink="/fluege/suche"
+            routerLink="/spiele/suche"
             routerLinkActive="active"
             class="nav-link"
         >
@@ -34,12 +34,12 @@
 
     <li class="nav-item" *ngIf="isAdmin">
         <a
-            routerLink="/fluege/create"
+            routerLink="/spiele/create"
             routerLinkActive="active"
             class="nav-link"
         >
             <fa-icon [icon]="faBook"></fa-icon>
-            <span class="ml-1">Neues Flug</span>
+            <span class="ml-1">Neues Spiel</span>
         </a>
     </li>
 
@@ -55,15 +55,15 @@
             <span class="ml-1">Diagramme</span>
         </div>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a routerLink="/fluege/balkendiagramm" class="dropdown-item">
+            <a routerLink="/spiele/balkendiagramm" class="dropdown-item">
                 <fa-icon [icon]="faChartBar"></fa-icon>
                 <span class="ml-1">Balkendiagramm</span>
             </a>
-            <a routerLink="/fluege/liniendiagramm" class="dropdown-item">
+            <a routerLink="/spiele/liniendiagramm" class="dropdown-item">
                 <fa-icon [icon]="faChartLine"></fa-icon>
                 <span class="ml-1">Liniendiagramm</span>
             </a>
-            <a routerLink="/fluege/tortendiagramm" class="dropdown-item">
+            <a routerLink="/spiele/tortendiagramm" class="dropdown-item">
                 <fa-icon [icon]="faChartPie"></fa-icon>
                 <span class="ml-1">Tortendiagramm</span>
             </a>

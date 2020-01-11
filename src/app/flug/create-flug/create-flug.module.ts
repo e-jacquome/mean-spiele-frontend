@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { CreateArtModule } from './create-art.module';
-import { CreateFlugComponent } from './create-flug.component';
+import { CreateSpielComponent } from './create-spiel.component';
 import { CreateDatumModule } from './create-datum.module';
 import { CreateIsbnModule } from './create-isbn.module';
 import { CreateLieferbarModule } from './create-lieferbar.module';
@@ -37,10 +37,10 @@ import { Title } from '@angular/platform-browser';
 // Ein Modul enthaelt logisch zusammengehoerige Funktionalitaet.
 // Exportierte Komponenten koennen bei einem importierenden Modul in dessen
 // Komponenten innerhalb deren Templates (= HTML-Fragmente) genutzt werden.
-// FlugModule ist ein "FeatureModule", das Features fuer Fluege bereitstellt
+// SpielModule ist ein "FeatureModule", das Features fuer Spiele bereitstellt
 @NgModule({
-    declarations: [CreateFlugComponent],
-    exports: [CreateFlugComponent],
+    declarations: [CreateSpielComponent],
+    exports: [CreateSpielComponent],
     imports: [
         CommonModule,
         HttpClientModule,
@@ -60,4 +60,4 @@ import { Title } from '@angular/platform-browser';
     ],
     providers: [Title],
 })
-export class CreateFlugModule {}
+export class CreateSpielModule {}

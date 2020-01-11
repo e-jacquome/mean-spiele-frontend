@@ -17,8 +17,8 @@
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Flug } from '../../shared/flug';
-import { FlugService } from '../../shared/flug.service';
+import { Spiel } from '../../shared/spiel';
+import { SpielService } from '../../shared/spiel.service';
 import { HOME_PATH } from '../../../shared';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -32,9 +32,9 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
     templateUrl: './update-schlagwoerter.component.html',
 })
 export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
-    // <hs-update-schlagwoerter [flug]="...">
+    // <hs-update-schlagwoerter [spiel]="...">
     @Input()
-    readonly flug!: Flug;
+    readonly spiel!: Spiel;
 
     form!: FormGroup;
     javascript!: FormControl;
@@ -45,7 +45,7 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
     private updateSubscription: Subscription | undefined;
 
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly router: Router,
     ) {
         console.log('UpdateSchlagwoerterComponent.constructor()');
@@ -53,15 +53,15 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
 
     /**
      * Das Formular als Gruppe von Controls initialisieren und mit den
-     * Schlagwoertern des zu &auml;ndernden Flugs vorbelegen.
+     * Schlagwoertern des zu &auml;ndernden Spiels vorbelegen.
      */
     ngOnInit() {
-        console.log('flug=', this.flug);
+        console.log('spiel=', this.spiel);
 
         // Definition und Vorbelegung der Eingabedaten (hier: Checkbox)
-        const hasJavaScript = this.flug.hasSchlagwort('JAVASCRIPT');
+        const hasJavaScript = this.spiel.hasSchlagwort('JAVASCRIPT');
         this.javascript = new FormControl(hasJavaScript);
-        const hasTypeScript = this.flug.hasSchlagwort('TYPESCRIPT');
+        const hasTypeScript = this.spiel.hasSchlagwort('TYPESCRIPT');
         this.typescript = new FormControl(hasTypeScript);
 
         this.form = new FormGroup({
@@ -78,7 +78,7 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Die aktuellen Schlagwoerter f&uuml;r das angezeigte Flug-Objekt
+     * Die aktuellen Schlagwoerter f&uuml;r das angezeigte Spiel-Objekt
      * zur&uuml;ckschreiben.
      * @return false, um das durch den Button-Klick ausgel&ouml;ste Ereignis
      *         zu konsumieren.
@@ -92,18 +92,18 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
             return undefined;
         }
 
-        if (this.flug === undefined) {
+        if (this.spiel === undefined) {
             console.error(
-                'UpdateSchlagwoerterComponent.onUpdate(): flug === undefined',
+                'UpdateSchlagwoerterComponent.onUpdate(): spiel === undefined',
             );
             return undefined;
         }
 
-        this.flug.updateSchlagwoerter(
+        this.spiel.updateSchlagwoerter(
             this.javascript.value,
             this.typescript.value,
         );
-        console.log('flug=', this.flug);
+        console.log('spiel=', this.spiel);
 
         const successFn = () => {
             console.log(
@@ -137,8 +137,8 @@ export class UpdateSchlagwoerterComponent implements OnInit, OnDestroy {
                 errors,
             );
         };
-        this.updateSubscription = this.flugService.update(
-            this.flug,
+        this.updateSubscription = this.spielService.update(
+            this.spiel,
             successFn,
             errorFn,
         );

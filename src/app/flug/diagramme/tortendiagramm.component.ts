@@ -22,7 +22,7 @@ import {
     OnDestroy,
     ViewChild,
 } from '@angular/core';
-import { FlugService } from '../shared/flug.service';
+import { SpielService } from '../shared/spiel.service';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
@@ -42,7 +42,7 @@ export class TortendiagrammComponent implements AfterViewInit, OnDestroy {
     private pieChartSubscription: Subscription | undefined;
 
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly titleService: Title,
     ) {
         console.log('TortendiagrammComponent.constructor()');
@@ -54,7 +54,7 @@ export class TortendiagrammComponent implements AfterViewInit, OnDestroy {
      * zugegriffen werden.
      */
     ngAfterViewInit() {
-        this.pieChartSubscription = this.flugService.createPieChart(
+        this.pieChartSubscription = this.spielService.createPieChart(
             this.chartCanvas.nativeElement,
         );
         this.titleService.setTitle('Tortendiagramm');

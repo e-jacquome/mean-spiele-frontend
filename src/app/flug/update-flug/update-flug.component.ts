@@ -17,14 +17,14 @@
 
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Flug } from '../shared/flug';
-import { FlugService } from '../shared/flug.service';
+import { Spiel } from '../shared/spiel';
+import { SpielService } from '../shared/spiel.service';
 import { HttpStatus } from '../../shared';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
 /**
- * Komponente f&uuml;r das Tag <code>hs-update-flug</code> mit Kindkomponenten
+ * Komponente f&uuml;r das Tag <code>hs-update-spiel</code> mit Kindkomponenten
  * f&uuml;r die folgenden Tags:
  * <ul>
  *  <li> <code>hs-stammdaten</code>
@@ -32,40 +32,40 @@ import { Title } from '@angular/platform-browser';
  * </ul>
  */
 @Component({
-    selector: 'hs-update-flug',
-    templateUrl: './update-flug.component.html',
+    selector: 'hs-update-spiel',
+    templateUrl: './update-spiel.component.html',
 })
-export class UpdateFlugComponent implements OnInit, OnDestroy {
-    flug: Flug | undefined;
+export class UpdateSpielComponent implements OnInit, OnDestroy {
+    spiel: Spiel | undefined;
     errorMsg: string | undefined;
 
-    private flugSubscription!: Subscription;
+    private spielSubscription!: Subscription;
     private errorSubscription!: Subscription;
     private idParamSubscription!: Subscription;
     private findByIdSubscription: Subscription | undefined;
 
     constructor(
-        private readonly flugService: FlugService,
+        private readonly spielService: SpielService,
         private readonly titleService: Title,
         private readonly route: ActivatedRoute,
     ) {
-        console.log('UpdateFlugComponent.constructor()');
+        console.log('UpdateSpielComponent.constructor()');
     }
 
     ngOnInit() {
-        // Die Beobachtung starten, ob es ein zu aktualisierendes Flug oder
+        // Die Beobachtung starten, ob es ein zu aktualisierendes Spiel oder
         // einen Fehler gibt.
-        this.flugSubscription = this.subscribeFlug();
+        this.spielSubscription = this.subscribeSpiel();
         this.errorSubscription = this.subscribeError();
 
-        // Pfad-Parameter aus /fluege/:id/update
+        // Pfad-Parameter aus /spiele/:id/update
         this.idParamSubscription = this.subscribeIdParam();
 
         this.titleService.setTitle('Aktualisieren');
     }
 
     ngOnDestroy() {
-        this.flugSubscription.unsubscribe();
+        this.spielSubscription.unsubscribe();
         this.errorSubscription.unsubscribe();
         this.idParamSubscription.unsubscribe();
 
@@ -74,13 +74,13 @@ export class UpdateFlugComponent implements OnInit, OnDestroy {
         }
     }
 
-    private subscribeFlug() {
-        const next = (flug: Flug) => {
+    private subscribeSpiel() {
+        const next = (spiel: Spiel) => {
             this.errorMsg = undefined;
-            this.flug = flug;
-            console.log('UpdateFlug.flug=', this.flug);
+            this.spiel = spiel;
+            console.log('UpdateSpiel.spiel=', this.spiel);
         };
-        return this.flugService.flugSubject.subscribe(next);
+        return this.spielService.spielSubject.subscribe(next);
     }
 
     /**
@@ -88,7 +88,7 @@ export class UpdateFlugComponent implements OnInit, OnDestroy {
      */
     private subscribeError() {
         const next = (err: string | number | undefined) => {
-            this.flug = undefined;
+            this.spiel = undefined;
 
             if (err === undefined) {
                 this.errorMsg = 'Ein Fehler ist aufgetreten.';
@@ -102,22 +102,22 @@ export class UpdateFlugComponent implements OnInit, OnDestroy {
 
             switch (err) {
                 case HttpStatus.NOT_FOUND:
-                    this.errorMsg = 'Kein Flug vorhanden.';
+                    this.errorMsg = 'Kein Spiel vorhanden.';
                     break;
                 default:
                     this.errorMsg = 'Ein Fehler ist aufgetreten.';
                     break;
             }
-            console.log(`UpdateFlugComponent.errorMsg: ${this.errorMsg}`);
+            console.log(`UpdateSpielComponent.errorMsg: ${this.errorMsg}`);
         };
 
-        return this.flugService.errorSubject.subscribe(next);
+        return this.spielService.errorSubject.subscribe(next);
     }
 
     private subscribeIdParam() {
         const next = (params: Params) => {
             console.log('params=', params);
-            this.findByIdSubscription = this.flugService.findById(params.id);
+            this.findByIdSubscription = this.spielService.findById(params.id);
         };
         // ActivatedRoute.params is an Observable
         return this.route.params.subscribe(next);

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { FlugArt } from '../../shared/flug';
+import { SpielArt } from '../../shared/spiel';
 
 /**
  * Komponente f&uuml;r das Tag <code>hs-details-art</code>
@@ -27,7 +27,7 @@ import { FlugArt } from '../../shared/flug';
 })
 export class DetailsArtComponent implements OnInit {
     @Input()
-    readonly art!: FlugArt;
+    readonly art!: SpielArt;
 
     ngOnInit() {
         console.log(`DetailsArtComponent.art=${this.art}`);

@@ -21,7 +21,7 @@ import {
     RouterStateSnapshot,
     UrlTree,
 } from '@angular/router';
-import { CreateFlugComponent } from './create-flug.component';
+import { CreateSpielComponent } from './create-spiel.component';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -29,13 +29,13 @@ import { Observable } from 'rxjs';
 // https://angular.io/guide/router#can-deactivate-guard
 
 @Injectable({ providedIn: 'root' })
-export class CreateFlugGuard implements CanDeactivate<CreateFlugComponent> {
+export class CreateSpielGuard implements CanDeactivate<CreateSpielComponent> {
     constructor() {
-        console.log('CreateFlugGuard.constructor()');
+        console.log('CreateSpielGuard.constructor()');
     }
 
     canDeactivate(
-        createFlug: CreateFlugComponent,
+        createSpiel: CreateSpielComponent,
         _: ActivatedRouteSnapshot, // eslint-disable-line @typescript-eslint/no-unused-vars
         __: RouterStateSnapshot, // eslint-disable-line @typescript-eslint/no-unused-vars
     ):
@@ -43,14 +43,14 @@ export class CreateFlugGuard implements CanDeactivate<CreateFlugComponent> {
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
-        if (createFlug.fertig) {
+        if (createSpiel.fertig) {
             // Seite darf zur gewuenschten URL verlassen werden
             return true;
         }
 
-        createFlug.showWarning = true;
-        createFlug.fertig = true;
-        console.warn('CreateFlugGuard.canDeactivate(): Verlassen der Seite');
+        createSpiel.showWarning = true;
+        createSpiel.fertig = true;
+        console.warn('CreateSpielGuard.canDeactivate(): Verlassen der Seite');
         return false;
     }
 }

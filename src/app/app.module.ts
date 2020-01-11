@@ -20,7 +20,7 @@
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlugModule } from './flug/flug.module';
+import { SpielModule } from './spiel/spiel.module';
 import { FooterModule } from './layout/footer/footer.module';
 import { HeaderModule } from './layout/header/header.module';
 import { HomeModule } from './home/home.module';
@@ -57,7 +57,7 @@ import { environment } from '../environments/environment';
 
         AppRoutingModule,
         HomeModule,
-        FlugModule,
+        SpielModule,
         FooterModule,
         HeaderModule,
         MainModule,
