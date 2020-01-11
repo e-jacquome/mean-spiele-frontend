@@ -39,7 +39,7 @@ https://{{host}}/spiele?titel=a
 https://{{host}}/spiele?isbn=000-0-00000-000-1
 
 ### Suche mit vorhandenen Schlagwoertern
-https://{{host}}/spiele?javascript=true&typescript=true
+https://{{host}}/spiele?solo=true&typescript=true
 
 ### Suche mit gueltiger Spielart
 https://{{host}}/spiele?art=KINDLE

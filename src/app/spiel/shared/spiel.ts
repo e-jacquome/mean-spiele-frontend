@@ -21,13 +21,13 @@ const MIN_RATING = 0;
 const MAX_RATING = 5;
 
 export enum Verlag {
-    IWI_VERLAG = 'IWI_VERLAG',
-    HSKA_VERLAG = 'HSKA_VERLAG',
+    RAVENSBURGER = 'RAVENSBURGER',
+    SCHMIDT = 'SCHMIDT',
 }
 
 export enum SpielArt {
-    KINDLE = 'KINDLE',
-    DRUCKAUSGABE = 'DRUCKAUSGABE',
+    BRETT = 'BRETT',
+    KARTEN = 'KARTEN',
 }
 
 /**
@@ -43,7 +43,7 @@ export interface SpielShared {
     rabatt: number;
     datum?: string;
     lieferbar?: boolean;
-    isbn: string;
+    //isbn: string;
     version?: number;
 }
 
@@ -81,8 +81,8 @@ export interface SpielServer extends SpielShared {
  */
 export interface SpielForm extends SpielShared {
     rating: string;
-    javascript?: boolean;
-    typescript?: boolean;
+    solo?: boolean;
+    team?: boolean;
 }
 
 /**
@@ -117,7 +117,7 @@ export class Spiel {
         public rabatt: number,
         public lieferbar: boolean | undefined,
         schlagwoerter: Array<string> | undefined,
-        public isbn: string,
+        //public isbn: string,
         public version: number | undefined,
     ) {
         // TODO Parsing, ob der Datum-String valide ist
@@ -163,7 +163,7 @@ export class Spiel {
             spielServer.rabatt,
             spielServer.lieferbar,
             spielServer.schlagwoerter,
-            spielServer.isbn,
+            //spielServer.isbn,
             version,
         );
         console.log('Spiel.fromServer(): spiel=', spiel);
@@ -178,11 +178,11 @@ export class Spiel {
     static fromForm(spielForm: SpielForm) {
         console.log('Spiel.fromForm(): spielForm=', spielForm);
         const schlagwoerter: Array<string> = [];
-        if (spielForm.javascript === true) {
-            schlagwoerter.push('JAVASCRIPT');
+        if (spielForm.solo === true) {
+            schlagwoerter.push('SOLO');
         }
-        if (spielForm.typescript === true) {
-            schlagwoerter.push('TYPESCRIPT');
+        if (spielForm.team === true) {
+            schlagwoerter.push('TEAM');
         }
 
         const rabatt =
@@ -198,7 +198,7 @@ export class Spiel {
             rabatt,
             spielForm.lieferbar,
             schlagwoerter,
-            spielForm.isbn,
+            //spielForm.isbn,
             spielForm.version,
         );
         console.log('Spiel.fromForm(): spiel=', spiel);
@@ -275,7 +275,7 @@ export class Spiel {
         datum: Date | undefined,
         preis: number,
         rabatt: number,
-        isbn: string,
+        //isbn: string,
     ) {
         this.titel = titel;
         this.art = art;
@@ -288,7 +288,7 @@ export class Spiel {
         this.datum = datum === undefined ? new Date() : datum;
         this.preis = preis;
         this.rabatt = rabatt;
-        this.isbn = isbn;
+        //this.isbn = isbn;
     }
 
     /**
@@ -316,16 +316,16 @@ export class Spiel {
 
     /**
      * Aktualisierung der Schlagw&ouml;rter des Spiel-Objekts.
-     * @param javascript ist das Schlagwort JAVASCRIPT gesetzt
-     * @param typescript ist das Schlagwort TYPESCRIPT gesetzt
+     * @param solo ist das Schlagwort SOLO gesetzt
+     * @param team ist das Schlagwort TEAM gesetzt
      */
-    updateSchlagwoerter(javascript: boolean, typescript: boolean) {
+    updateSchlagwoerter(solo: boolean, team: boolean) {
         this.resetSchlagwoerter();
-        if (javascript) {
-            this.addSchlagwort('JAVASCRIPT');
+        if (solo) {
+            this.addSchlagwort('SOLO');
         }
-        if (typescript) {
-            this.addSchlagwort('TYPESCRIPT');
+        if (team) {
+            this.addSchlagwort('TEAM');
         }
     }
 
@@ -349,7 +349,7 @@ export class Spiel {
             rabatt: this.rabatt,
             lieferbar: this.lieferbar,
             schlagwoerter: this.schlagwoerter,
-            isbn: this.isbn,
+            //isbn: this.isbn,
         };
     }
 

@@ -30,13 +30,13 @@ export class CreateSchlagwoerterComponent implements OnInit {
     @Input()
     readonly form!: FormGroup;
 
-    readonly javascript = new FormControl(false);
-    readonly typescript = new FormControl(false);
+    readonly solo = new FormControl(false);
+    readonly team = new FormControl(false);
 
     ngOnInit() {
         console.log('CreateSchlagwoerterComponent.ngOnInit');
         // siehe formControlName innerhalb @Component({templateUrl: ...})
-        this.form.addControl('javascript', this.javascript);
-        this.form.addControl('typescript', this.typescript);
+        this.form.addControl('solo', this.solo);
+        this.form.addControl('team', this.team);
     }
 }
