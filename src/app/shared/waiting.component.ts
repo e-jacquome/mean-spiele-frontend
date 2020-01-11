@@ -24,7 +24,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
         <div>
             <fa-icon [icon]="faSpinner"></fa-icon>
             <span class="ml-1">
-                Die Daten werden geladen. Bitte warten ...
+                Ihre Websiteninhalte werden geladen. Bitte haben Sie einen Moment Gedult.  . . . 
             </span>
         </div>
     `,
