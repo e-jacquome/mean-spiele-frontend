@@ -22,7 +22,8 @@ $gradient: url(/assets/img/gradientBlueSky.png);
     background-color: $background-color;
     background-position: left top;
     background-repeat: repeat-x;
-    background-image: $gradient;
+    color: white;
+    //background-image: $gradient;
     // display: block;
 }
 
