@@ -3,71 +3,68 @@
 ###
 
 @token = Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1MTcwNDkyOTgsImlzcyI6Imh0dHBzOi8vaHNrYS5kZS9zaG9wL0p1ZXJnZW5aaW1tZXJtYW5uIiwic3ViIjoiMjAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAxIiwianRpIjoiZGY0MzM4ZDQtZGQ3Yi00ZDI4LTk1NTEtMzUyYWM5ZWExMGUwIiwiZXhwIjoxNTE3MTM1Njk4fQ.oIXlxJ1qYpFFz4f_5eSLuCTeqc4dSnVwfXZIlPqtQLdbTFgSefyHRVqa2j4QUo9ztF_Ipy2x-prVQZ3NzKDzjBGPqPpwQePDvhblRR9fyKx6GeFncX8ncak4oIzQRkL--M5hQgY-8lmot3bn_lIwGiuG_mjEiW6AZgyTXISmuTJEDp2KDh0JyCGaWh1Kk7TE3DlSbJqaLMQE0JJsSlGXsH55ukztS6PIHmpdp-rME8ayFjXV7rQGIWLQmLCcApoY284g5kAxlYeVjoBhTVmmrjY194JgAJLjWJ7zDv0f2IffaoZnOLUNar7KUBdO1c0ECYiMBqLSxQ3ZO4vo-02NNA
-@host = 127.0.0.1:8443
+@host = 127.0.0.1:8444
+@basic_auth_admin = Basic YWRtaW46cA
 
 ### Login
-# @name login
 POST https://{{host}}/login
 Content-Type: application/x-www-form-urlencoded
 
 username=admin&password=p
 
-### Login mit falschem Password
-# @name login
-POST https://{{host}}/login
-Content-Type: application/x-www-form-urlencoded
+### Suche alle Spiele
+https://{{host}}
+Authorization: {{basic_auth_admin}}
 
-username=admin&password=FALSCH
-
-### Suche alle Buecher
-https://{{host}}/spiele
-
-### Suche mit vorhandener Buch-ID
+### Suche mit vorhandener Spiel-ID
 https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
 
-### Suche mit vorhandener Buch-ID und Versionsnummer
+### Suche mit vorhandener Spiel-ID und Versionsnummer
 https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
 If-None-Match: 0
 
-### Optionen zu Buch-ID
+### Optionen zu Spiel-ID
 OPTIONS https://{{host}}/spiele/00000000-0000-0000-0000-000000000001
 
-### Suche mit ungueltiger Buch-ID
+### Suche mit ungueltiger Spiel-ID
 https://{{host}}/spiele/YYYYYYYY-YYYY-YYYY-YYYY-YYYYYYYYYYYY
 
-### Suche mit nicht-vorhandener Buch-ID
+### Suche mit nicht-vorhandener Spiel-ID
 https://{{host}}/spiele/99999999-9999-9999-9999-999999999999
 
 ### Suche mit vorhandenem Titel
 https://{{host}}/spiele?titel=a
 
-### Suche mit vorhandenen Schlagwoertern
-https://{{host}}/spiele?solo=true&team=true
+### Suche mit vorhandener ISBN-Nummber
+https://{{host}}/spiele?isbn=000-0-00000-000-1
 
-### Suche mit gueltiger Buchart
-https://{{host}}/spiele?art=KARTEN
+### Suche mit vorhandenen Schlagwoertern
+https://{{host}}/spiele?solo=true&typescript=true
+
+### Suche mit gueltiger Spielart
+https://{{host}}/spiele?art=KINDLE
 
 ### Suche mit gueltigem Rating
 https://{{host}}/spiele?rating=1
 
-### Suche lieferbare Buecher
+### Suche lieferbare Spiele
 https://{{host}}/spiele?lieferbar=true
 
-### Neues Buch anlegen
+### Neues Spiel anlegen
 POST https://{{host}}/spiele
 Content-Type: application/json
 Authorization: {{token}}
 
 < ./config/rest/spiel-neu.json
 
-### Neues Buch mit ungueltigen Daten anlegen
+### Neues Spiel mit ungueltigen Daten anlegen
 POST https://{{host}}/spiele
 Content-Type: application/json
 Authorization: {{token}}
 
 < ./config/rest/spiel-neu-invalid.json
 
-### Vorhandenes Buch aktualisieren
+### Vorhandenes Spiel aktualisieren
 PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
 Content-Type: application/json
 Authorization: {{token}}
@@ -75,14 +72,14 @@ If-Match: 0
 
 < ./config/rest/spiel-3-put.json
 
-### Vorhandenes Buch *OHNE* Versionsnummer aktualisieren
+### Vorhandenes Spiel *OHNE* Versionsnummer aktualisieren
 PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
 Content-Type: application/json
 Authorization: {{token}}
 
 < ./config/rest/spiel-3-put.json
 
-### Vorhandenes Buch mit ungueltigen Daten aktualisieren
+### Vorhandenes Spiel mit ungueltigen Daten aktualisieren
 PUT https://{{host}}/spiele/00000000-0000-0000-0000-000000000003
 Content-Type: application/json
 Authorization: {{token}}
@@ -90,6 +87,8 @@ If-Match: 0
 
 < ./config/rest/spiel-3-put-invalid.json
 
-### Loeschen eines vorhandenen Buches
+### Loeschen eines vorhandenen Spieles
 DELETE https://{{host}}/spiele/00000000-0000-0000-0000-000000000005
 Authorization: {{token}}
+
+###

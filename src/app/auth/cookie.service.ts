@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 
-// Namen der Cookies: nur als Speichermechanismus (nicht zum Server übertragen):
+// n der Cookies: nur als Speichermechanismus (nicht zum Server übertragen):
 // Ablaufdatum oder Session-Cookie (Lebensdauer gebunden an Tab).
 // Kein XSS (Cross-Site Scripting) wie bei Local Storage
 // Evtl. CSRF (Cross-Site Request Forgery)

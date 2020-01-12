@@ -24,7 +24,7 @@ export const HOME_PATH = 'home';
 const SCHEME = 'https';
 const PORT = 443;
 const SERVERNAME = 'localhost';
-const BASE_PATH = '';
+const BASE_PATH = '/rest';
 
 // CORS statt Proxy:
 // const SCHEME = 'https'
@@ -40,4 +40,4 @@ export const BASE_URI = `${SCHEME}://${SERVERNAME}:${PORT}${BASE_PATH}`;
 /**
  * Pfad beim REST-Server fuer spiele
  */
-export const SPIELE_PATH_REST = '/';
+export const SPIELE_PATH_REST = 'spiele';

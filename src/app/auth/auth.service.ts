@@ -21,9 +21,9 @@ import { JwtService } from './jwt.service';
 import { Subject } from 'rxjs';
 import { BasicAuthService } from './basic-auth.service';
 
-// export const ROLLE_ADMIN = 'admin';
+export const ROLLE_ADMIN = 'admin';
 // Spring Security:
-export const ROLLE_ADMIN = 'ROLE_ADMIN';
+//export const ROLLE_ADMIN = 'ROLE_ADMIN';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -52,15 +52,16 @@ export class AuthService {
         );
         let rollen: Array<string> = [];
         try {
-            const rollenString = await this.basicAuthService.login(
-                username,
-                password,
-            );
-            console.log(
-                'AuthService.login(): Rollen als String: ',
-                rollenString,
-            );
-            rollen = rollenString.split(',');
+            rollen = await this.jwtService.login(username, password);
+            //const rollenString = await this.basicAuthService.login(
+            //  username,
+            //    password,
+            //);
+            //console.log(
+            //    'AuthService.login(): Rollen als String: ',
+            //    rollenString,
+            //);
+            //rollen = rollenString.split(',');
             console.log('AuthService.login()', rollen);
             this.isLoggedInSubject.next(true);
         } catch (e) {

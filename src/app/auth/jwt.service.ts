@@ -40,7 +40,7 @@ export class JwtService {
         username: string | undefined,
         password: string | undefined,
     ): Promise<Array<string>> {
-        const loginUri = `${BASE_URI}/rest/login`;
+        const loginUri = `${BASE_URI}/login`;
         console.log(`JwtService.login(): loginUri=${loginUri}`);
 
         // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
